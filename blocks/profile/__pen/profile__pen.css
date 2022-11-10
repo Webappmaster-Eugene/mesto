@@ -1,9 +1,6 @@
 .profile__pen{
-    background-image: url('../../../images/svg_icons/pen1.svg');
     width: 10px;
     height: 10px;
-    background-position: center;
-    background-size: cover;
 }
 
 .profile__pen:hover{
@@ -12,7 +9,7 @@
 
 @media screen and (max-width: 631px) {
     .profile__pen{
-        min-width: 8px;
-        min-height: 8px;
+        max-width: 8px;
+        max-height: 8px;
     }
 }
