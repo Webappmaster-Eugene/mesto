@@ -1,0 +1,13 @@
+
+.profile__pen{
+    background-image: url('../../../images/svg_icons/pen1.svg');
+    width: 10px;
+    height: 10px;
+    background-position: center;
+    background-size: cover;
+}
+
+.profile__pen:hover{
+    /* background-image: url('../../../images/svg_icons/pen2.svg'); */
+    cursor: pointer;
+}

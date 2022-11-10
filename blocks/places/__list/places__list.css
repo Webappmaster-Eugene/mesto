@@ -1,0 +1,13 @@
+
+.places__list{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 17px;
+    justify-content: space-evenly;
+    width: 100%;
+    max-width: 880px;
+    box-sizing: border-box;
+}

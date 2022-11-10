@@ -1,0 +1,15 @@
+
+.profile__info{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: center;
+}
+
+@media screen and (max-width: 549px){
+    .profile__info{
+        align-content: center;
+        align-items: center;
+        gap: 14px;
+    }
+}

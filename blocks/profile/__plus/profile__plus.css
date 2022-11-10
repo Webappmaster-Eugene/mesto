@@ -1,0 +1,13 @@
+
+.profile__plus{
+    background-image: url('../../../images/svg_icons/plus1.svg');
+    width: 22px;
+    height: 22px;
+    background-position: center;
+    background-size: cover;
+}
+
+.profile__plus:hover{
+    /* background-image: url('images/svg_icons/plus2.svg'); */
+    cursor: pointer;
+}

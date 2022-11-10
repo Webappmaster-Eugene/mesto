@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru" class="html">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Жак-Ив Кусто">
+        <link rel="shortcut icon"
+            href="images/avatar.jpg"
+            type="image/x-icon">
+        <link rel="stylesheet" href="./pages/index.css">
+        <title>Путешествия в Mesto...</title>
+    </head>
+
+    <body class="page">
+
+        <header class="header">
+            <a class="logo" href="#"><img class="logo__image" src="images/svg_icons/logo.svg" alt="Фотография логотипа"></a>
+        </header>
+
+        <main class="content">
+            <section class="profile">
+                <img class="profile__avatar" src="images/avatar.jpg" alt="Фотография пользователя">
+                <div class="profile__info">
+                    <div class="profile__top-row">
+                        <h1 class="profile__name">Жак-Ив Кусто</h1> 
+                        <div class="profile__changer">
+                            <div class="profile__pen"></div>
+                        </div>
+                    </div>
+                    <h2 class="profile__status">Исследователь океана</h2>
+                </div>
+                
+                <div class="profile__add">
+                    <div class="profile__plus"></div>
+                </div>
+            </section>
+
+            <section class="places">
+                <ul class="places__list">
+                    <li class="place">
+                        <img class="place__photo" src="images/karachaevsk.jpg" alt="Фотография Карачаевска">
+                        <div class="place__info">
+                            <h3 class="place__name">Карачаевск</h3>
+                            <div class="place__like place__like_active"></div>
+                        </div>
+                    </li>
+                    <li class="place">
+                        <img class="place__photo" src="images/dombai.png" alt="Фотография Домбая">
+                        <div class="place__info">
+                            <h3 class="place__name">Домбай</h3>
+                            <div class="place__like"></div>
+                        </div>
+                    </li>
+                    <li class="place">
+                        <img class="place__photo" src="images/elbrus.png" alt="Эльбруса">
+                        <div class="place__info">
+                            <h3 class="place__name">Гора Эльбрус - самая высокая гора в Европе</h3>
+                            <div class="place__like"></div>
+                        </div>
+                    </li>
+                    <li class="place">
+                        <img class="place__photo" src="images/karachaevsk.jpg" alt="Фотография Карачаевска">
+                        <div class="place__info">
+                            <h3 class="place__name">Карачаевск - столица КЧР</h3>
+                            <div class="place__like"></div>
+                        </div>
+                    </li>
+                    <li class="place">
+                        <img class="place__photo" src="images/dombai.png" alt="Фотография Домбая">
+                        <div class="place__info">
+                            <h3 class="place__name">Домбай в Карачаево-Черкесии</h3>
+                            <div class="place__like"></div>
+                        </div>
+                    </li>
+                    <li class="place">
+                        <img class="place__photo" src="images/elbrus.png" alt="Фотграфия Эльбруса">
+                        <div class="place__info">
+                            <h3 class="place__name">Гора Эльбрус в КБР</h3>
+                            <div class="place__like place__like_active"></div>
+                        </div>
+                    </li>
+                </ul>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p class="footer__copyright">© 2022 Mesto Russia</p>
+        </footer>
+
+        <div class="popup popup_display-none">
+            <div class="popup__translucent-close">
+                <img class="popup__close" src="images/svg_icons/close1.svg" alt="Закрыть поп-ап">
+                <div class="popup__container">
+                    <div class="popup__text-wrapper">
+                        <h2 class="popup__header">Редактировать профиль</h2>
+                        <form class="popup__inputs">
+                            <input type="text" class=" popup__input popup__input_type_name" placeholder="Иван Иванович">
+                            <input type="text" class="popup__input popup__input_type_info" placeholder="Покоритель пустоши">
+                        </form>
+                        <div class="popup__button-group">
+                            <button class="button">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <script src="./scripts/script.js"></script>
+    </body>
+</html>

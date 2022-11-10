@@ -1,0 +1,10 @@
+
+.footer{
+    display: flex;
+}
+
+@media screen and (max-width: 549px){
+    .footer{ 
+        padding: 0 19px 0 19px;
+    }
+}

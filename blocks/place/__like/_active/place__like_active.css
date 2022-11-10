@@ -1,0 +1,9 @@
+.place__like_active{
+    background-image: url('../../../../images/svg_icons/heart1.svg');
+}
+
+.place__like_active:hover{
+    background-image: url('../../../../images/svg_icons/heart1.svg');
+    cursor: pointer;
+    opacity: 0.8;
+}

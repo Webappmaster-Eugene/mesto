@@ -1,0 +1,15 @@
+
+.profile__changer{
+    min-width: 24px;
+    min-height: 24px;
+    border: 1px solid white;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin-top: 9px;
+}
+
+.profile__changer:hover{
+    opacity: 60%;
+    cursor: pointer;
+}

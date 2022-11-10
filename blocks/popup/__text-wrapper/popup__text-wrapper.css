@@ -1,0 +1,14 @@
+
+.popup__text-wrapper{
+    display: flex;
+    flex-direction: column;
+    padding: 34px 36px 37px 36px;
+    justify-content: space-between;
+    height: 100%;
+}
+
+@media screen and (max-width: 631px) {
+    .popup__text-wrapper{
+        padding: 25px 22px;
+    }
+}

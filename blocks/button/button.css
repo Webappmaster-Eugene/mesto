@@ -1,0 +1,22 @@
+.button{
+    width: 100%;
+    background: #000000;
+    border-radius: 2px;
+    height: 50px;
+    color: white;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.button:hover{
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 631px) {
+    .button{
+        font-size: 14px;
+        line-height: 17px;
+    }
+}

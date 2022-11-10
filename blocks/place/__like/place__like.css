@@ -1,0 +1,13 @@
+.place__like{
+    background-image: url('../../../images/svg_icons/heart2.svg');
+    min-width: 22px;
+    height: 19px;
+    background-position: center;
+    background-size: cover;
+}
+
+.place__like:hover{
+    background-image: url('../../../images/svg_icons/heart3.svg');
+    cursor: pointer;
+}
+
