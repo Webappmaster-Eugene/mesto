@@ -1,5 +1,7 @@
 
 .profile__add{
+    background-color: transparent;
+    outline: none;
     min-width: 150px;
     height: 50px;
     border: 2px solid white;
@@ -21,5 +23,5 @@
 
 .profile__add:hover{
     cursor: pointer;
-    opacity: 0.8;
+    opacity: 0.6;
 }

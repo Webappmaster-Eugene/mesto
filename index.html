@@ -24,16 +24,16 @@
                 <div class="profile__info">
                     <div class="profile__top-row">
                         <h1 class="profile__name">Жак-Ив Кусто</h1> 
-                        <div class="profile__changer">
+                        <button class="profile__changer" type="button">
                             <div class="profile__pen"></div>
-                        </div>
+                        </button>
                     </div>
-                    <h2 class="profile__status">Исследователь океана</h2>
+                    <p class="profile__status">Исследователь океана</p>
                 </div>
                 
-                <div class="profile__add">
+                <button class="profile__add" type="button">
                     <div class="profile__plus"></div>
-                </div>
+                </button>
             </section>
 
             <section class="places">
@@ -41,43 +41,43 @@
                     <li class="place">
                         <img class="place__photo" src="images/karachaevsk.jpg" alt="Фотография Карачаевска">
                         <div class="place__info">
-                            <h3 class="place__name">Карачаевск</h3>
-                            <div class="place__like place__like_active"></div>
+                            <h2 class="place__name">Карачаевск</h2>
+                            <button class="place__like place__like_active" type="button"></button>
                         </div>
                     </li>
                     <li class="place">
                         <img class="place__photo" src="images/dombai.png" alt="Фотография Домбая">
                         <div class="place__info">
-                            <h3 class="place__name">Домбай</h3>
-                            <div class="place__like"></div>
+                            <h2 class="place__name">Домбай</h2>
+                            <button class="place__like" type="button"></button>
                         </div>
                     </li>
                     <li class="place">
                         <img class="place__photo" src="images/elbrus.png" alt="Эльбруса">
                         <div class="place__info">
-                            <h3 class="place__name">Гора Эльбрус - самая высокая гора в Европе</h3>
-                            <div class="place__like"></div>
+                            <h2 class="place__name">Гора Эльбрус - самая высокая гора в Европе</h2>
+                            <button class="place__like" type="button"></button>
                         </div>
                     </li>
                     <li class="place">
                         <img class="place__photo" src="images/karachaevsk.jpg" alt="Фотография Карачаевска">
                         <div class="place__info">
-                            <h3 class="place__name">Карачаевск - столица КЧР</h3>
-                            <div class="place__like"></div>
+                            <h2 class="place__name">Карачаевск - столица КЧР</h2>
+                            <button class="place__like" type="button"></button>
                         </div>
                     </li>
                     <li class="place">
                         <img class="place__photo" src="images/dombai.png" alt="Фотография Домбая">
                         <div class="place__info">
-                            <h3 class="place__name">Домбай в Карачаево-Черкесии</h3>
-                            <div class="place__like"></div>
+                            <h2 class="place__name">Домбай в Карачаево-Черкесии</h2>
+                            <button class="place__like" type="button"></button>
                         </div>
                     </li>
                     <li class="place">
                         <img class="place__photo" src="images/elbrus.png" alt="Фотграфия Эльбруса">
                         <div class="place__info">
-                            <h3 class="place__name">Гора Эльбрус в КБР</h3>
-                            <div class="place__like place__like_active"></div>
+                            <h2 class="place__name">Гора Эльбрус в КБР</h2>
+                            <button class="place__like place__like_active" type="button"></button>
                         </div>
                     </li>
                 </ul>
@@ -88,20 +88,20 @@
             <p class="footer__copyright">© 2022 Mesto Russia</p>
         </footer>
 
-        <div class="popup popup_display-none">
+        <div class="popup">
             <div class="popup__translucent-close">
-                <img class="popup__close" src="images/svg_icons/close1.svg" alt="Закрыть поп-ап">
+                <!-- <button class="button" type="button"><img class="popup__close" src="images/svg_icons/close1.svg" alt="Закрыть поп-ап"></button> -->
+                <button class="popup__close" type="button"></button>
                 <div class="popup__container">
-                    <div class="popup__text-wrapper">
+                    <!-- <div class="popup__text-wrapper"> -->
                         <h2 class="popup__header">Редактировать профиль</h2>
-                        <form class="popup__inputs">
-                            <input type="text" class=" popup__input popup__input_type_name" placeholder="Иван Иванович">
-                            <input type="text" class="popup__input popup__input_type_info" placeholder="Покоритель пустоши">
+                        <form class="popup__inputs" name="aboutUser">
+                            <input type="text" name="aboutUser" class=" popup__input popup__input_type_name" placeholder="Иван Иванович" required>
+                            <input type="text" name="aboutUser" class="popup__input popup__input_type_info" placeholder="Покоритель пустоши" required>
+                            <button class="popup__button" type="button">Сохранить</button>
                         </form>
-                        <div class="popup__button-group">
-                            <button class="button">Сохранить</button>
-                        </div>
-                    </div>
+                            
+                    <!-- </div> -->
                 </div>
             </div>
         </div>

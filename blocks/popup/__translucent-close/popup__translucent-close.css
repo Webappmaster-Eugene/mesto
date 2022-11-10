@@ -1,13 +1,10 @@
 
 .popup__translucent-close{
     width: 505px;
-    height: 390px;
+    height: 420px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    justify-content: center;
-    align-items: center;
-    position: relative;
 }
 
 @media screen and (max-width: 631px) {

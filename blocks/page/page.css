@@ -11,7 +11,7 @@
     line-height: 29px;
     color: white;
     margin: 0 auto;
-    max-height: 100vh;
+    min-height: 100vh;
 }
 
 @media screen and (max-width: 1279px){

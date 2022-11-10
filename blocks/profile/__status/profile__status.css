@@ -8,6 +8,13 @@
 
 @media screen and (max-width: 549px){
     .profile__status{
-        margin-right: 14px;
+        margin-right: 16px;
+        font-size: 14px;
+        line-height: 17px;
+        text-overflow: ellipsis;
+        -o-text-overflow: ellipsis;
+        -ms-text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 }

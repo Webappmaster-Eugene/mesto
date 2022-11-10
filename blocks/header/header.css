@@ -3,7 +3,7 @@
     flex-direction: row;
     justify-content: left;
     width: 100%;
-    border-bottom: 1px solid #545454;
+    border-bottom: 1px solid rgba(84, 84, 84, 0.7);
     align-items: flex-start;
     margin-bottom: 36px;
     box-sizing: border-box;

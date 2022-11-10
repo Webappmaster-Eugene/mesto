@@ -1,7 +1,7 @@
 @import url('../vendor/normalize.css');
 @import url('../vendor/fonts/fonts.css');
 
-@import url('../blocks/button/button.css');
+@import url('../blocks/popup/__button/popup__button.css');
 @import url('../blocks/content/content.css');
 @import url('../blocks/footer/footer.css');
 @import url('../blocks/footer/__copyright/footer__copyright.css');
@@ -24,7 +24,7 @@
 @import url('../blocks/popup/__inputs/popup__inputs.css');
 @import url('../blocks/popup/__text-wrapper/popup__text-wrapper.css');
 @import url('../blocks/popup/__translucent-close/popup__translucent-close.css');
-@import url('../blocks/popup/_display-none/popup_display-none.css');
+@import url('../blocks/popup/_opened/popup_display-none.css');
 @import url('../blocks/profile/profile.css');
 @import url('../blocks/profile/__add/profile__add.css');
 @import url('../blocks/profile/__avatar/profile__avatar.css');

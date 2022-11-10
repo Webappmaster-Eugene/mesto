@@ -2,9 +2,14 @@
     width: 32px;
     height: 32px;
     align-self: flex-end;
-    position: absolute;
-    top: 0;
-    right: 0;
+    justify-self: right;
+
+    background-image: url('../../../images/svg_icons/close1.svg');
+    background-position: center;
+    background-size: cover;
+    background-color: transparent;
+    outline: none;
+    border: none;
 }
 
 @media screen and (max-width: 631px) {

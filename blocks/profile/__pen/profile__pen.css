@@ -1,4 +1,3 @@
-
 .profile__pen{
     background-image: url('../../../images/svg_icons/pen1.svg');
     width: 10px;
@@ -8,6 +7,12 @@
 }
 
 .profile__pen:hover{
-    /* background-image: url('../../../images/svg_icons/pen2.svg'); */
     cursor: pointer;
+}
+
+@media screen and (max-width: 631px) {
+    .profile__pen{
+        min-width: 8px;
+        min-height: 8px;
+    }
 }

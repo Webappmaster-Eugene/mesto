@@ -10,4 +10,12 @@
 .profile__plus:hover{
     /* background-image: url('images/svg_icons/plus2.svg'); */
     cursor: pointer;
+    
+}
+
+@media screen and (max-width: 631px) {
+    .profile__plus{
+        width: 16px;
+        height: 16px;
+    }
 }

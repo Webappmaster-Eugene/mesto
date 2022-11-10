@@ -1,6 +1,7 @@
 
 .footer{
     display: flex;
+    flex-shrink: 0;
 }
 
 @media screen and (max-width: 549px){
