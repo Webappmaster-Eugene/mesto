@@ -2,8 +2,6 @@
 .popup__translucent-close{
     width: 505px;
     height: 390px;
-    width: 505px;
-    height: 390px;
     display: flex;
     flex-direction: column;
     gap: 8px;
