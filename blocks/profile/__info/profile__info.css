@@ -1,9 +1,15 @@
-
 .profile__info{
     display: flex;
     flex-direction: column;
     gap: 16px;
     justify-content: center;
+    max-width: 100%;
+    overflow: hidden;
+    max-width: 100%;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+    white-space: nowrap;
+    flex-wrap: nowrap;
 }
 
 @media screen and (max-width: 549px){

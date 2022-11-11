@@ -8,7 +8,7 @@
     cursor: pointer; 
 }
 
-@media screen and (max-width: 631px) {
+@media screen and (max-width: 549px) {
     .profile__plus{
         width: 16px;
         height: 16px;

@@ -12,16 +12,18 @@ let placeLikes = document.querySelectorAll('.place__like');
 
 profileOpen.addEventListener('click', function(){
     popupForm.classList.toggle('popup_opened');
+    inputName.value = profileName.textContent;
+    inputInfo.value = profileStatus.textContent;
 });
 
 popupClose.addEventListener('click', function(){
     popupForm.classList.toggle('popup_opened');
 });
 
-popupButton.addEventListener('click', function(){
+popupButton.addEventListener('click', function(event){
     profileName.textContent = inputName.value;
     profileStatus.textContent = inputInfo.value;
-    console.log('dfdfdf');
+    event.preventDefault();
     popupForm.classList.toggle('popup_opened');
 });
 
@@ -30,6 +32,3 @@ for (let placeLike of placeLikes) {
         placeLike.classList.toggle('place__like_active');
     });
 }
-
-inputName.value = profileName.textContent;
-inputInfo.value = profileStatus.textContent;

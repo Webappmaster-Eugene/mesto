@@ -1,5 +1,4 @@
 
-
 .profile{
     display: flex;
     flex-direction: row;
@@ -10,8 +9,7 @@
     box-sizing: border-box;
 }
 
-
-@media screen and (max-width: 754px){
+@media screen and (max-width: 756px){
     .profile{
         flex-wrap: wrap;
         gap: 0;

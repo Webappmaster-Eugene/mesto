@@ -1,4 +1,3 @@
-
 .popup__input{
     border: none;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
@@ -6,13 +5,11 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
-    -webkit-border-radius: 1px;
-    -moz-border-radius: 1px;
-    -khtml-border-radius: 1px;
     background: #ffffff;
     outline: none;
     width: 100%;
-    padding: 10px 0 13px 0;
+    padding: 0 0 13px 0;
+    box-sizing: border-box;
 }
 
 .popup__input:focus{
@@ -21,10 +18,4 @@
 
 .popup__input:active {
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
-}
-
-@media screen and (max-width: 631px) {
-    .popup__input{
-        padding: 7px 0 13px 0;
-    }
 }

@@ -1,9 +1,9 @@
-
 .places{
     display: flex;
     margin-top: 47px;
     margin-bottom: 67px;
 }
+
 @media screen and (max-width: 549px){
     .places{
         margin-bottom: 48px;

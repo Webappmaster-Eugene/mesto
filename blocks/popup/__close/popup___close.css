@@ -3,19 +3,23 @@
     height: 32px;
     align-self: flex-end;
     justify-self: right;
-
+    position: absolute;
+    top: 0;
+    right: 0;
     background-image: url('../../../images/svg_icons/close1.svg');
     background-position: center;
     background-size: cover;
     background-color: transparent;
     outline: none;
     border: none;
+    margin: -36px -36px 0 0;
 }
 
 @media screen and (max-width: 631px) {
     .popup__close{
         width: 20px;
         height: 20px;
+        margin: -31px 0 0 0;
     }
 }
 
