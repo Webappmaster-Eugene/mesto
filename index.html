@@ -38,15 +38,21 @@
 
             <section class="places">
                 <ul class="places__list">
+                                   
+
+                    <template id="template-place">
                     <li class="place">
                         <img class="place__photo" src="./images/karachaevsk.jpg" alt="Фотография Карачаевска">
+                        <button class="place__delete" type="button"></button>
                         <div class="place__info">
                             <h2 class="place__name">Карачаевск</h2>
-                            <button class="place__like place__like_active" type="button"></button>
+                            <button class="place__like" type="button"></button>
                         </div>
                     </li>
-                    <li class="place">
+                </template>
+                     <li class="place">
                         <img class="place__photo" src="./images/dombai2.jpg" alt="Фотография Домбая и природы вокруг">
+                        <button class="place__delete" type="button"></button>
                         <div class="place__info">
                             <h2 class="place__name">Домбай</h2>
                             <button class="place__like" type="button"></button>
@@ -54,6 +60,7 @@
                     </li>
                     <li class="place">
                         <img class="place__photo" src="./images/elbrus2.jpg" alt="Фотография Эльбруса в солнце">
+                        <button class="place__delete" type="button"></button>
                         <div class="place__info">
                             <h2 class="place__name">Гора Эльбрус - самая высокая гора в Европе</h2>
                             <button class="place__like" type="button"></button>
@@ -61,6 +68,7 @@
                     </li>
                     <li class="place">
                         <img class="place__photo" src="./images/karachaevsk2.jpg" alt="Фотография Карачаевска издалека">
+                        <button class="place__delete" type="button"></button>
                         <div class="place__info">
                             <h2 class="place__name">Карачаевск - столица КЧР</h2>
                             <button class="place__like" type="button"></button>
@@ -68,18 +76,20 @@
                     </li>
                     <li class="place">
                         <img class="place__photo" src="./images/dombai.png" alt="Фотография Домбая">
+                        <button class="place__delete" type="button"></button>
                         <div class="place__info">
                             <h2 class="place__name">Домбай в Карачаево-Черкесии</h2>
                             <button class="place__like" type="button"></button>
                         </div>
                     </li>
-                    <li class="place">
+                    <!--<li class="place">
                         <img class="place__photo" src="./images/elbrus.png" alt="Фотография Эльбруса">
+                        <button class="place__delete" type="button"></button>
                         <div class="place__info">
                             <h2 class="place__name">Гора Эльбрус в КБР</h2>
-                            <button class="place__like place__like_active" type="button"></button>
+                            <button class="place__like" type="button"></button>
                         </div>
-                    </li>
+                    </li> -->
                 </ul>
             </section>
         </main>
@@ -88,7 +98,7 @@
             <p class="footer__copyright">© 2022 Mesto Russia</p>
         </footer>
 
-        <div class="popup">
+        <div class="popup popup_type_change-profile">
             <div class="popup__container">
                 <button class="popup__close" type="button"></button>
                 <h2 class="popup__header">Редактировать профиль</h2>
@@ -99,6 +109,26 @@
                 </form>
             </div>
         </div>
+
+        <div class="popup popup_type_add-publication">
+            <div class="popup__container">
+                <button class="popup__close" type="button"></button>
+                <h2 class="popup__header">Новое место</h2>
+                <form class="popup__inputs" name="aboutPlace" method="post">
+                    <input type="text" name="aboutPlace" class=" popup__input popup__input_type_place" placeholder="Название" required>
+                    <input type="text" name="aboutPlace" class="popup__input popup__input_type_photo" placeholder="Ссылка на картинку" required>
+                    <button class="popup__button" type="submit">Создать</button>
+                </form>
+            </div>
+        </div> 
+
+        <div class="popup popup_type_place">
+            <div class="popup__container popup__container_place">
+                <img class="popup__photo" alt="Фото от автора" src="./images/dombai.png">
+                <h2 class="popup__description"></h2>
+                <button class="popup__close" type="button"></button>
+            </div>
+        </div> 
 
         <script src="./scripts/script.js"></script>
     </body>
