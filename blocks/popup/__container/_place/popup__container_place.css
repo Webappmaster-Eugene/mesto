@@ -1,0 +1,10 @@
+.popup__container_place{
+    max-width: 75vw;
+    max-height: 75vh;
+    display: flex;
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0;
+    position: relative;
+}
