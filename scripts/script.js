@@ -28,12 +28,14 @@ const initialCards = [
 const profileOpen = document.querySelector('.profile__changer');
 const postAdd = document.querySelector('.profile__add');
 
-const popupForms = document.querySelectorAll('.popup');
 const popupChange = document.querySelector('.popup_type_change-profile');
 const popupAdd = document.querySelector('.popup_type_add-publication');
 const popupPlace = document.querySelector('.popup_type_place');
 
-const popupCloses = document.querySelectorAll('.popup__close');
+const profileForm = document.forms["profile-form"];
+const cardForm = document.forms["card-form"];
+
+const closeButtons = document.querySelectorAll('.popup__close');
 const popupButtons = document.querySelectorAll('.popup__button');
 const inputName = document.querySelector('.popup__input_type_name');
 const inputInfo = document.querySelector('.popup__input_type_info');
@@ -44,47 +46,106 @@ const inputPhoto = document.querySelector('.popup__input_type_photo');
 const profileName = document.querySelector('.profile__name');
 const profileStatus = document.querySelector('.profile__status');
 
-const placeCards = document.querySelectorAll('.place');
-const placeLikes = document.querySelectorAll('.place__like');
-const placeBins = document.querySelectorAll('.place__delete');
 const placeCardsParent = document.querySelector('.places__list');
 
-function openPopUp(nameOfPopUp){
+function togglePopUp(nameOfPopUp){
     nameOfPopUp.classList.toggle('popup_opened');
+    resetInputs(nameOfPopUp);
 }
 
 profileOpen.addEventListener('click', function(){
-    openPopUp(popupChange);
+    togglePopUp(popupChange);
     inputName.value = profileName.textContent;
     inputInfo.value = profileStatus.textContent;
 });
 
 postAdd.addEventListener('click', function(){
-    openPopUp(popupAdd);
+    togglePopUp(popupAdd);
 });
 
-popupCloses.forEach(popupClose => {
-    popupClose.addEventListener('click', function(){
-        openPopUp(popupClose.closest('.popup'));
+closeButtons.forEach(closeButton => {
+    closeButton.addEventListener('click', function(){
+        togglePopUp(closeButton.closest('.popup'));
     });
 });
 
-popupButtons.forEach(popupButton => {
-    popupButton.addEventListener('click', function(event){
-        event.preventDefault();
-        if ((inputName.value !== '' && inputInfo.value !== '' && popupButton.closest('.popup').classList.contains('popup_type_change-profile')) 
-        || (inputPlace.value !== ''  && inputPhoto.value !== '' && popupButton.closest('.popup').classList.contains('popup_type_add-publication'))){
-            popupButton.closest('.popup').classList.toggle('popup_opened');
-            if (popupButton.closest('.popup').classList.contains('popup_type_change-profile')){
-                profileName.textContent = inputName.value;
-                profileStatus.textContent = inputInfo.value;
-            }
-            if (popupButton.closest('.popup').classList.contains('popup_type_add-publication')){
-                createPublication(inputPlace.value, inputPhoto.value);
-            }
+function checkForImage(url){
+    let regex = /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gmi
+    let result;
+    if (url.match(regex)){
+        result = {
+            match: url.match(regex)
         }
+    } else {
+        result = false;
+    }
+    return result;
+}
+
+function handleProfileFormSubmit(profileForm){
+    if (profileForm.closest('.popup').classList.contains('popup_type_change-profile') && inputName.value !== '' && inputInfo.value !== ''){
+        profileName.textContent = inputName.value;
+        profileStatus.textContent = inputInfo.value;
+    }
+}
+
+function handleCardFormSubmit(cardForm){
+    if (cardForm.closest('.popup').classList.contains('popup_type_add-publication') && inputPlace.value !== ''  && inputPhoto.value !== '' && checkForImage(inputPhoto.value)){
+        insertPublication(inputPlace.value, inputPhoto.value);
+    }
+    else alert('Введите правильный url-адрес для фотографии и попробуйте ещё раз!');
+}
+
+function resetInputs(form){
+    form.querySelectorAll('.popup__input').forEach(input => {
+        input.value = '';
     });
-});
+}
+
+function submitProfileForm(profileForm){
+    profileForm.addEventListener('submit', function(event){
+        event.preventDefault();
+        handleProfileFormSubmit(profileForm);
+        togglePopUp(profileForm.closest('.popup'));
+    });
+}
+
+submitProfileForm(profileForm);
+
+function submitCardForm(cardForm){
+    cardForm.addEventListener('submit', function(event){
+        event.preventDefault();
+        handleCardFormSubmit(cardForm);
+        resetInputs(cardForm);
+        togglePopUp(cardForm.closest('.popup'));
+    });
+}
+
+submitCardForm(cardForm);
+
+//ПОЖАЛУЙСТА, ПОДСКАЖИТЕ МНЕ МОЮ ОШИБКУ! ОЧЕНЬ ВАМ БЛАГОДАРНА!
+//Геннадий, подскажите пожалуйста, почему не работают данных два вызова стрелочных функций?
+//Когда закомментирую function declaration-выражения, то почему-то срабатывает post отправка формы на сервер, как будто нет event.preventDefault(), а скорее мои стрелочные анонимные функции вообще не отрабатывают
+//При том, что их аналоги - функции работают отлично, как видите.
+//Либо я не понимаю особенности function expression в данном случае, либо что-то не так делаю..
+//По моей логике - они должны вызываться автоматически, event.preventDefault() там есть...
+// ПЕРВАЯ ФУНКЦИЯ
+// const submitProfileForm = (profileForm) => {
+//     profileForm.addEventListener('submit', function(event){
+//         event.preventDefault();
+//         handleProfileFormSubmit(profileForm);
+//         togglePopUp(profileForm.closest('.popup'));
+//     });
+// };
+// ВТОРАЯ ФУНКЦИЯ
+// Вот вторая анонимная функция, которая тоже не работает
+// const submitCardForm = () => {
+//     cardForm.addEventListener('submit', function(event){
+//         event.preventDefault();
+//         handleCardFormSubmit(cardForm);
+//         togglePopUp(cardForm.closest('.popup'));
+//     });
+// };
 
 function makeLike(placeLike){
     placeLike.addEventListener('click', function(event){
@@ -93,10 +154,10 @@ function makeLike(placeLike){
     });
 }
 
-function deleteBin (placeBin){
+function handleRemoveByClickBin(placeBin){
     placeBin.addEventListener('click', function(event){
         event.stopPropagation();
-        let parent = placeBin.closest('.place');
+        const parent = placeBin.closest('.place');
         parent.remove();
     });
 }
@@ -104,22 +165,31 @@ function deleteBin (placeBin){
 function viewPublication(publication){
     publication.addEventListener('click', function(event){
         event.preventDefault();
-        openPopUp(popupPlace);
-        popupPlace.childNodes[1].childNodes[1].src = `${publication.childNodes[1].src}`;
-        popupPlace.childNodes[1].childNodes[3].textContent = `${publication.childNodes[5].childNodes[1].textContent}`;
+        togglePopUp(popupPlace);
+        popupPlace.querySelector('.popup__photo').src = publication.querySelector('.place__photo').src;
+        popupPlace.querySelector('.popup__description').textContent = publication.querySelector('.place__name').textContent;
     });
 }
 
-function createPublication(name, photo){
-    document.querySelector('#template-place').content.querySelector('.place__name').textContent = name;
-    document.querySelector('#template-place').content.querySelector('.place__photo').src = photo;
-    let clone = document.querySelector('#template-place').content.querySelector('.place').cloneNode(true);
+function createCard(name, photo){
+    const clone = document.querySelector('#template-place').content.querySelector('.place').cloneNode(true);
+    clone.querySelector('.place__name').textContent = name;
+    clone.querySelector('.place__photo').src = photo;
+    clone.querySelector('.place__photo').alt = photo.replace(/^.*[\\\/]/, '');
     makeLike(clone.querySelector('.place__like'));
-    deleteBin(clone.querySelector('.place__delete'));
+    handleRemoveByClickBin(clone.querySelector('.place__delete'));
     viewPublication(clone);
-    placeCardsParent.insertBefore(clone,placeCardsParent.children[0]);
+    return clone;
 }
 
-let begin = initialCards.forEach(item => {   
-    createPublication(item.name, item.link);
-});
+function insertPublication(name, photo){
+    const card = createCard(name, photo);
+    placeCardsParent.prepend(card);
+}
+
+function makeInitialCards(initialCards){
+    initialCards.forEach(item => {   
+        insertPublication(item.name, item.link);
+    });
+}
+makeInitialCards(initialCards);
