@@ -28,11 +28,9 @@ const initialCards = [
 const profileOpen = document.querySelector('.profile__changer');
 const postAdd = document.querySelector('.profile__add');
 
-const popups = document.querySelectorAll('.popup');
 const popupChange = document.querySelector('.popup_type_change-profile');
 const popupAdd = document.querySelector('.popup_type_add-publication');
 const popupPlace = document.querySelector('.popup_type_place');
-const popupContainers = document.querySelectorAll('.popup__container');
 
 const profileForm = document.forms["profile-form"];
 const cardForm = document.forms["card-form"];
@@ -54,26 +52,7 @@ const placeCardsParent = document.querySelector('.places__list');
 
 function togglePopUp(nameOfPopUp){
     nameOfPopUp.classList.toggle('popup_opened');
-    if (nameOfPopUp.classList.contains('popup__inputs')) {
-        nameOfPopUp.querySelector('.popup__inputs').reset();
-    }
 }
-
-popups.forEach((popup) => {
-    popup.addEventListener('click', (event) => {
-        if (event.target == popup) {
-            togglePopUp(popup);
-        }
-    }); 
-});
-
-popups.forEach((popup) => {
-    popup.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' || event.keyCode == 27) {
-            togglePopUp(popup);
-        }
-    });
-});
 
 profileOpen.addEventListener('click', function(){
     togglePopUp(popupChange);

@@ -7,6 +7,8 @@
     padding: 34px 36px 37px 36px;
     justify-content: space-between;
     position: relative;
+    max-width: 430px;
+    box-sizing: border-box;
 }
 
 @media screen and (max-width: 631px) {

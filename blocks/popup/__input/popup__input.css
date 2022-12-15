@@ -19,3 +19,7 @@
 .popup__input:active {
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
 }
+
+.popup__input::placeholder {
+    color: #C4C4C4;
+}
