@@ -53,9 +53,10 @@ const profileStatus = document.querySelector('.profile__status');
 const placeCardsParent = document.querySelector('.places__list');
 
 function togglePopUp(nameOfPopUp){
+    let form = nameOfPopUp.querySelector('.popup__inputs');
     nameOfPopUp.classList.toggle('popup_opened');
-    if (nameOfPopUp.classList.contains('popup__inputs')) {
-        nameOfPopUp.querySelector('.popup__inputs').reset();
+    if (form.classList.contains('popup__inputs')) {
+        form.reset();
     }
 }
 
