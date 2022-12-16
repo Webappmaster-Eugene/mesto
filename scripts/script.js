@@ -54,10 +54,10 @@ const placeCardsParent = document.querySelector('.places__list');
 
 function togglePopUp(nameOfPopUp){
     let form = nameOfPopUp.querySelector('.popup__inputs');
-    nameOfPopUp.classList.toggle('popup_opened');
-    if (form.classList.contains('popup__inputs')) {
+    if (form) {
         form.reset();
     }
+    nameOfPopUp.classList.toggle('popup_opened');
 }
 
 popups.forEach((popup) => {
@@ -68,13 +68,16 @@ popups.forEach((popup) => {
     }); 
 });
 
-popups.forEach((popup) => {
-    popup.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' || event.keyCode == 27) {
-            togglePopUp(popup);
-        }
-    });
-});
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+        popups.forEach((popup) => {
+            if (popup.classList.contains('popup_opened')){
+                togglePopUp(popup);
+            }
+        });
+    }
+});    
+
 
 profileOpen.addEventListener('click', function(){
     togglePopUp(popupChange);
@@ -131,7 +134,7 @@ function submitCardForm(cardForm){
     cardForm.addEventListener('submit', function(event){
         event.preventDefault();
         handleCardFormSubmit(cardForm);
-        event.target.reset()
+        event.target.reset();
         togglePopUp(cardForm.closest('.popup'));
     });
 }
