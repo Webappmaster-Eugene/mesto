@@ -1,4 +1,5 @@
 import initialCards from './initialCards.js';
+import settings from './settings.js';
 
 const profileOpen = document.querySelector('.profile__changer');
 const postAdd = document.querySelector('.profile__add');
@@ -31,18 +32,21 @@ function escapePopUp(e) {
     }
 }
 
-function openPopUp(nameOfPopUp){
+function deleteInputErrors(form) {
+    const inputList = Array.from(form.querySelectorAll(settings.inputSelector));
+    inputList.forEach(inputElement => {
+        hideInputError(form, inputElement, settings.inputErrorClass, settings.errorClass);
+    });
+}
+
+function openPopUp(nameOfPopUp) {
     nameOfPopUp.classList.add('popup_opened');
     document.addEventListener('keydown', escapePopUp);
 }
 
-function closePopUp(nameOfPopUp){
+function closePopUp(nameOfPopUp) {
     nameOfPopUp.classList.remove('popup_opened');
     nameOfPopUp.removeEventListener('keydown', escapePopUp);
-    const form = nameOfPopUp.querySelector('.popup__inputs');
-    if (form) {
-        resetPopUpForm(form);
-    }
 }
 
 function resetPopUpForm(form) {
@@ -58,12 +62,15 @@ popups.forEach((popup) => {
 });
 
 profileOpen.addEventListener('click', () => {
-    openPopUp(popupChange);
     inputName.value = profileName.textContent;
     inputInfo.value = profileStatus.textContent;
+    deleteInputErrors(profileForm);
+    openPopUp(popupChange);
 });
 
 postAdd.addEventListener('click', () => {
+    resetPopUpForm(cardForm);
+    deleteInputErrors(cardForm);
     openPopUp(popupAdd);
 });
 
@@ -75,19 +82,19 @@ closeButtons.forEach(closeButton => {
 });
 
 const handleProfileFormSubmit = (profileForm) => {
-    if (inputName.value !== '' && inputInfo.value !== ''){
+    if (inputName.value !== '' && inputInfo.value !== '') {
         profileName.textContent = inputName.value;
         profileStatus.textContent = inputInfo.value;
     }
 }
 
 function handleCardFormSubmit(cardForm){
-    if (inputPlace.value !== ''  && inputPhoto.value !== '' && checkForImage(inputPhoto.value)){
+    if (inputPlace.value !== ''  && inputPhoto.value !== '') {
         insertPublication(inputPlace.value, inputPhoto.value);
     }
 }
 
-function listenEventsProfileForm(profileForm){
+function listenEventsProfileForm(profileForm) {
     profileForm.addEventListener('submit', (event) => submitProfileForm(event, profileForm));
 }
 
@@ -98,7 +105,7 @@ function submitProfileForm(event, profileForm) {
     closePopUp(popup);
 }
 
-function listenEventsCardForm(cardForm){
+function listenEventsCardForm(cardForm) {
     cardForm.addEventListener('submit', (event) => submitCardForm(event, cardForm));
 }
 
@@ -113,9 +120,9 @@ function submitCardForm(event, cardForm) {
 listenEventsProfileForm(profileForm);
 listenEventsCardForm(cardForm);
 
-const makeLike = (event, like) => {
+const makeLike = (event) => {
+    event.target.classList.toggle('place__like_active');
     event.stopPropagation();
-    like.classList.toggle('place__like_active');
 };
 
 function handleRemoveByClickBin(event, deleteButton) {
@@ -124,17 +131,15 @@ function handleRemoveByClickBin(event, deleteButton) {
     parent.remove();
 }
 
-function viewPublication(publication, name, photo){
-    publication.addEventListener('click', function(event){
-        event.preventDefault();
-        popupPhoto.src = photo;
-        popupPhoto.alt = photo.replace(/^.*[\\\/]/, '');
-        popupDescription.textContent = name;
-        openPopUp(popupPlace);
-    });
+function viewPublication(event, name, photo) {
+    event.preventDefault();
+    popupPhoto.src = photo;
+    popupPhoto.alt = photo.replace(/^.*[\\\/]/, '');
+    popupDescription.textContent = name;
+    openPopUp(popupPlace);
 }
 
-function createCard(name, photo){
+function createCard(name, photo) {
     const clone = document.querySelector('#template-place').content.querySelector('.place').cloneNode(true);
     const clonePhoto = clone.querySelector('.place__photo');
     const like = clone.querySelector('.place__like');
@@ -142,19 +147,19 @@ function createCard(name, photo){
     clone.querySelector('.place__name').textContent = name;
     clonePhoto.src = photo;
     clonePhoto.alt = photo.replace(/^.*[\\\/]/, '');
-    like.addEventListener('click', (event) => makeLike(event, like));
+    like.addEventListener('click', makeLike);
     deleteButton.addEventListener('click', (event) => handleRemoveByClickBin(event, deleteButton));
-    viewPublication(clone, name, photo);
+    clone.addEventListener('click', (event) => viewPublication(event, name, photo));
     return clone;
 }
 
-function insertPublication(name, photo){
+function insertPublication(name, photo) {
     const card = createCard(name, photo);
     placeCardsParent.prepend(card);
 }
 
-function makeInitialCards(initialCards){
-    initialCards.forEach(item => {   
+function makeInitialCards(initialCards) {
+    initialCards.forEach(item => {
         insertPublication(item.name, item.link);
     });
 }
