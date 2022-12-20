@@ -71,6 +71,7 @@ profileOpen.addEventListener('click', () => {
 postAdd.addEventListener('click', () => {
     resetPopUpForm(cardForm);
     deleteInputErrors(cardForm);
+    toggleButtonState(Array.from(cardForm.querySelectorAll(settings.inputSelector)), cardForm.querySelector(settings.submitButtonSelector), settings.inactiveButtonClass);
     openPopUp(popupAdd);
 });
 
@@ -131,8 +132,7 @@ function handleRemoveByClickBin(event, deleteButton) {
     parent.remove();
 }
 
-function viewPublication(event, name, photo) {
-    event.preventDefault();
+function viewPublication(name, photo) {
     popupPhoto.src = photo;
     popupPhoto.alt = photo.replace(/^.*[\\\/]/, '');
     popupDescription.textContent = name;
@@ -149,7 +149,7 @@ function createCard(name, photo) {
     clonePhoto.alt = photo.replace(/^.*[\\\/]/, '');
     like.addEventListener('click', makeLike);
     deleteButton.addEventListener('click', (event) => handleRemoveByClickBin(event, deleteButton));
-    clone.addEventListener('click', (event) => viewPublication(event, name, photo));
+    clone.addEventListener('click', () => viewPublication(name, photo));
     return clone;
 }
 
