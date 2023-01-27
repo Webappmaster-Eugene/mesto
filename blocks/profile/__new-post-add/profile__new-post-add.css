@@ -1,5 +1,5 @@
 
-.profile__add{
+.profile__new-post-add{
     background-color: transparent;
     outline: none;
     min-width: 150px;
@@ -12,15 +12,16 @@
     border-radius: 2px;
 }
 
+.profile__new-post-add:hover{
+    cursor: pointer;
+    opacity: 0.6;
+}
+
 @media screen and (max-width: 756px){
-    .profile__add{
+    .profile__new-post-add{
         margin-left: 0;
         width: 100%;
         margin-top: 36px;
     }
 }
 
-.profile__add:hover{
-    cursor: pointer;
-    opacity: 0.6;
-}
