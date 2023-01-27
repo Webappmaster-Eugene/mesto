@@ -30,10 +30,11 @@ const profileStatus = document.querySelector('.profile__status'); //Поле в 
 const placeCardsParent = document.querySelector('.places__list'); //Блок в документе с карточками places
 
 //1. Валидация инпутов в попапах с изменением содержимого
-const profileFormValidation = new FormValidator(settings, profileForm);
 const addCardFormValidation = new FormValidator(settings, cardForm);
-profileFormValidation._enableValidation();
 addCardFormValidation._enableValidation();
+
+const profileFormValidation = new FormValidator(settings, profileForm);
+profileFormValidation._enableValidation();
 
 //2. Функции для работы с карточками place, генерации контента в блок places
 
@@ -41,6 +42,7 @@ addCardFormValidation._enableValidation();
 function createCard(cardFeaturesObject) {
     const card = new Card(cardFeaturesObject, '#template-place', viewPublication);
     const cardNewPlace = card._createCard();
+    
     return cardNewPlace;
 }
 
@@ -53,8 +55,8 @@ function insertPublication(cardNewPlace) {
 function makeInitialCards(initialCards) {
     initialCards.forEach(itemCard => {
         let cardFeaturesObject = {
-            name: itemCard.name,
             link: itemCard.link,
+            name: itemCard.name
         };
         insertPublication(createCard(cardFeaturesObject));
     });
@@ -63,9 +65,9 @@ function makeInitialCards(initialCards) {
 //Сгенерировать карточки по умолчанию в HTML-документ
 makeInitialCards(initialCards);
 
-//Пограничные функции - нет категории для разнесения 
+//Пограничные функции
 
-//Функция удаления ошибок ПОАОАЛЛЕОЕПЬПЕТТПП
+//Функция удаления ошибок
 function deleteInputErrors(form) {
 const openDeafultFormValidation = new FormValidator(settings, form);
 
@@ -86,8 +88,8 @@ function openPopUp(nameOfPopUp) {
 //Функция закрытия попапа универсальная (дизактивирует также слушатель на клавишу escape)
 function closePopUp(nameOfPopUp) {
     if(nameOfPopUp.classList.contains('popup_opened')){
-        nameOfPopUp.classList.remove('popup_opened');
         nameOfPopUp.removeEventListener('keydown', escapePopUp);
+        nameOfPopUp.classList.remove('popup_opened');
     } 
 }
 
@@ -101,9 +103,7 @@ function escapePopUp(e) {
 //Функция закрытия попапа, если клик мышкой произошел вне области попапа
 popups.forEach((popup) => {
     popup.addEventListener('click', (event) => {
-        if (event.target == popup) {
-            closePopUp(popup);
-        }
+        if (event.target == popup) closePopUp(popup);
     }); 
 });
 
@@ -140,8 +140,10 @@ const handleProfileFormSubmit = () => {
 function listenEventsProfileForm(profileForm) {
     profileForm.addEventListener('submit', (event) => submitProfileForm(event));
 }
+//Включить слушатель события на форму изменения профиля
+listenEventsProfileForm(profileForm);
 
-//Функция отправки формы изменения профиля
+//Функция отправки формы изменения изменения профиля
 function submitProfileForm(event) {
     const popup = profileForm.closest('.popup')
     event.preventDefault();
@@ -151,15 +153,14 @@ function submitProfileForm(event) {
 
 //Функция для слушателя события клика на добавление новой карточки place
 postAdd.addEventListener('click', () => {
-    resetPopUpForm(cardForm);
     deleteInputErrors(cardForm);
+    resetPopUpForm(cardForm);
     addCardFormValidation._changeButtonStyle();
-    // toggleButtonState(Array.from(cardForm.querySelectorAll(settings.inputSelector)), cardForm.querySelector(settings.submitButtonSelector), settings.inactiveButtonClass);
     openPopUp(popupAdd);
 });
 
 //Обработчик отправки формы при нажатии на кнопку на изменение карточки place
-function handleCardFormSubmit(){
+function handleCardFormSubmit() {
     if (inputPlace.value !== ''  && inputPhoto.value !== '') {
         insertPublication(inputPlace.value, inputPhoto.value);
     }
@@ -169,6 +170,8 @@ function handleCardFormSubmit(){
 function listenEventsCardForm(cardForm) {
     cardForm.addEventListener('submit', (event) => submitCardForm(event));
 }
+//Включить слушатель события на форму добавления новой карточки place
+listenEventsCardForm(cardForm);
 
 //Функция отправки формы добавления новой карточки place
 function submitCardForm(event) {
@@ -186,7 +189,3 @@ function viewPublication(name, photoLink) {
     popupDescription.textContent = name;
     openPopUp(popupPlace);
 }
-
-//Включить слушатели события на формы в попапах
-listenEventsProfileForm(profileForm);
-listenEventsCardForm(cardForm);

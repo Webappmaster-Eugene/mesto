@@ -54,7 +54,7 @@ class FormValidator {
         this._inputsForm.map((input) => {
             this._setEventListeners(input);
         });
-        this._form.addEventListener('submit', function (evt) {
+        this._form.addEventListener('submit', (evt) => {
             evt.preventDefault();
         });
     }

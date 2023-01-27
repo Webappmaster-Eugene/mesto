@@ -45,15 +45,12 @@ class Card {
         this._removeButton = this._cardPlace.querySelector('.place__delete');
 
         //делаем собственно сами 3 слушателя
-
         this._photoOfCard.addEventListener('click', () => {
             this._functionOpenPlacePopUp(this._name, this._photoLink)
         });
-    
         this._removeButton.addEventListener('click', () => {
             this._removeCard();
         });
-
         this._makeLikeButton.addEventListener('click', () => {
             this._makeLike();
         });
