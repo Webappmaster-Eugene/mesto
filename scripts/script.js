@@ -36,9 +36,11 @@ addCardFormValidation._enableValidation();
 const profileFormValidation = new FormValidator(settings, profileForm);
 profileFormValidation._enableValidation();
 
-//2. Функции для работы с карточками place, генерации контента в блок places
+//2. Функции для работы с карточками place, генерации контента в блок places, вспомогательные функции
 
-//Функция создания новой карточки place
+//2.1 Основные функции для карточек
+
+//2.1.1 Функция создания новой карточки place
 function createCard(cardFeaturesObject) {
     const card = new Card(cardFeaturesObject, '#template-place', viewPublication);
     const cardNewPlace = card._createCard();
@@ -46,12 +48,12 @@ function createCard(cardFeaturesObject) {
     return cardNewPlace;
 }
 
-//Функция вставки новой карточки place в блок с публикациями данного профиля
+//2.1.2 Функция вставки новой карточки place в блок с публикациями данного профиля
 function insertPublication(cardNewPlace) {
     placeCardsParent.prepend(cardNewPlace);
 }
 
-//Функция генерации карточек place по умолчанию из объекта
+//2.1.3 Функция генерации карточек place по умолчанию из объекта
 function makeInitialCards(initialCards) {
     initialCards.forEach(itemCard => {
         let cardFeaturesObject = {
@@ -65,7 +67,7 @@ function makeInitialCards(initialCards) {
 //Сгенерировать карточки по умолчанию в HTML-документ
 makeInitialCards(initialCards);
 
-//Пограничные функции
+//Пограничные функции - они между классом и хардкодом зависли..
 
 //Функция удаления ошибок
 function deleteInputErrors(form) {
@@ -77,7 +79,7 @@ inputList.forEach(errorInputMessage => {
     });
 }
 
-//2.1 Вспомогательные функции для настройки взаимодействия с карточкой, установки слушателей, 
+//2.2 Вспомогательные функции для настройки взаимодействия с карточкой, установки слушателей
 
 //Функция открытия попапа универсальная (активирует также слушатель на клавишу escape)
 function openPopUp(nameOfPopUp) {
@@ -127,7 +129,6 @@ profileOpen.addEventListener('click', () => {
     deleteInputErrors(profileForm);
     openPopUp(popupChange);
 });
-
 //Обработчик отправки формы при нажатии на кнопку на изменение профиля
 const handleProfileFormSubmit = () => {
     if (inputName.value !== '' && inputInfo.value !== '') {
