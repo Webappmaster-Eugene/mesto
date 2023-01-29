@@ -12,7 +12,7 @@ class FormValidator {
     }
 
     //1. Функция, отвечающая за состояние кнопки отправки формы (активная/неактивная) в зависимости от валидации инпутов
-    _changeButtonStyle() {
+    changeButtonStyle() {
         this._hasInvalidInput(this._inputsForm) 
             ? (this._submitButton.classList.add(this._disabledButtonStyle),
             this._submitButton.disabled = true)
@@ -50,7 +50,7 @@ class FormValidator {
     }
 
     //3 Включить валидацию формы
-    _enableValidation() {
+    enableValidation() {
         this._inputsForm.map((input) => {
             this._setEventListeners(input);
         });
@@ -63,7 +63,7 @@ class FormValidator {
     _setEventListeners(input) {
         input.addEventListener('input', () => {
             this._toggleShowErrorMessage(input);
-            this._changeButtonStyle();
+            this.changeButtonStyle();
         });
     }
 }

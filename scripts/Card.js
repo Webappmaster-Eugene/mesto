@@ -15,7 +15,7 @@ class Card {
     }
 
     // 2.Тут уже создание карточки, то есть выгребаем всё из шаблона и устанавливаем слушатели событий
-    _createCard() {
+    createCard() {
         this._cardPlace = this._createCardTemplate();
         this._setEventListeners();
         this._nameCard = this._cardPlace.querySelector('.place__name');

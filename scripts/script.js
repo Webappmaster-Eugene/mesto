@@ -31,10 +31,10 @@ const placeCardsParent = document.querySelector('.places__list'); //Блок в 
 
 //1. Валидация инпутов в попапах с изменением содержимого
 const addCardFormValidation = new FormValidator(settings, cardForm);
-addCardFormValidation._enableValidation();
+addCardFormValidation.enableValidation();
 
 const profileFormValidation = new FormValidator(settings, profileForm);
-profileFormValidation._enableValidation();
+profileFormValidation.enableValidation();
 
 //2. Функции для работы с карточками place, генерации контента в блок places, вспомогательные функции
 
@@ -43,7 +43,7 @@ profileFormValidation._enableValidation();
 //2.1.1 Функция создания новой карточки place
 function createCard(cardFeaturesObject) {
     const card = new Card(cardFeaturesObject, '#template-place', viewPublication);
-    const cardNewPlace = card._createCard();
+    const cardNewPlace = card.createCard();
     
     return cardNewPlace;
 }
@@ -156,14 +156,18 @@ function submitProfileForm(event) {
 postAdd.addEventListener('click', () => {
     deleteInputErrors(cardForm);
     resetPopUpForm(cardForm);
-    addCardFormValidation._changeButtonStyle();
+    addCardFormValidation.changeButtonStyle();
     openPopUp(popupAdd);
 });
-
-//Обработчик отправки формы при нажатии на кнопку на изменение карточки place
+//Обработчик отправки формы при нажатии на кнопку на добавление карточки place
 function handleCardFormSubmit() {
     if (inputPlace.value !== ''  && inputPhoto.value !== '') {
-        insertPublication(inputPlace.value, inputPhoto.value);
+        let cardFeaturesObject = {
+            link: inputPhoto.value,
+            name: inputPlace.value
+        };
+        insertPublication(createCard(cardFeaturesObject));
+        
     }
 }
 
@@ -176,11 +180,11 @@ listenEventsCardForm(cardForm);
 
 //Функция отправки формы добавления новой карточки place
 function submitCardForm(event) {
-    const popup = cardForm.closest('.popup')
+    const popupCardForm = cardForm.closest('.popup')
     event.preventDefault();
-    handleCardFormSubmit(cardForm);
+    handleCardFormSubmit();
     event.target.reset();
-    closePopUp(popup);
+    closePopUp(popupCardForm);
 }
 
 //Функция для просмотра карточки place - открытие попапа
