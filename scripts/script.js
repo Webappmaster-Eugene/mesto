@@ -14,7 +14,7 @@ const popupPlace = document.querySelector('.popup_type_place'); //Конкрет
 const profileForm = document.forms["profile-form"]; //Форма изменения профиля
 const cardForm = document.forms["card-form"]; //Форма добавления карточки
 
-const closeButtons = document.querySelectorAll('.popup__close'); //Все крестики для закрытия попапов
+const popupscloseButtons = document.querySelectorAll('.popup__close'); //Все крестики для закрытия попапов
 const inputName = document.querySelector('.popup__input_type_name'); //Инпут с именем в попапе изменения профиля
 const inputInfo = document.querySelector('.popup__input_type_info'); //Инпут с информацией (статусом) в попапе изменения профиля
 
@@ -56,7 +56,7 @@ function insertPublication(cardNewPlace) {
 //2.1.3 Функция генерации карточек place по умолчанию из объекта
 function makeInitialCards(initialCards) {
     initialCards.forEach(itemCard => {
-        let cardFeaturesObject = {
+        const cardFeaturesObject = {
             link: itemCard.link,
             name: itemCard.name
         };
@@ -71,11 +71,9 @@ makeInitialCards(initialCards);
 
 //Функция удаления ошибок
 function deleteInputErrors(form) {
-const openDeafultFormValidation = new FormValidator(settings, form);
-
-const inputList = Array.from(form.querySelectorAll(settings.inputSelector));
-inputList.forEach(errorInputMessage => {
-    openDeafultFormValidation._hideInputError(errorInputMessage);
+    const spanInputErrorsList = Array.from(form.querySelectorAll(`.${settings.errorClass}`));
+    spanInputErrorsList.forEach(errorInputMessage => {
+        addCardFormValidation.hideInputError(errorInputMessage);
     });
 }
 
@@ -104,13 +102,13 @@ function escapePopUp(e) {
 
 //Функция закрытия попапа, если клик мышкой произошел вне области попапа
 popups.forEach((popup) => {
-    popup.addEventListener('click', (event) => {
+    popup.addEventListener('mousedown', (event) => {
         if (event.target == popup) closePopUp(popup);
     }); 
 });
 
 //Функция для закрытия попапа при нажатии на крестик в попапе
-closeButtons.forEach(closeButton => {
+popupscloseButtons.forEach(closeButton => {
     closeButton.addEventListener('click', () => {
         const popup = closeButton.closest('.popup');
         closePopUp(popup);
@@ -131,10 +129,8 @@ profileOpen.addEventListener('click', () => {
 });
 //Обработчик отправки формы при нажатии на кнопку на изменение профиля
 const handleProfileFormSubmit = () => {
-    if (inputName.value !== '' && inputInfo.value !== '') {
-        profileName.textContent = inputName.value;
-        profileStatus.textContent = inputInfo.value;
-    }
+    profileName.textContent = inputName.value;
+    profileStatus.textContent = inputInfo.value;
 }
 
 //Функция для слушателя события отправки формы изменения профиля
@@ -161,14 +157,11 @@ postAdd.addEventListener('click', () => {
 });
 //Обработчик отправки формы при нажатии на кнопку на добавление карточки place
 function handleCardFormSubmit() {
-    if (inputPlace.value !== ''  && inputPhoto.value !== '') {
-        let cardFeaturesObject = {
-            link: inputPhoto.value,
-            name: inputPlace.value
-        };
-        insertPublication(createCard(cardFeaturesObject));
-        
-    }
+    const cardFeaturesObject = {
+        link: inputPhoto.value,
+        name: inputPlace.value
+    };
+    insertPublication(createCard(cardFeaturesObject));
 }
 
 //Функция для слушателя события отправки формы добавления новой карточки place

@@ -32,9 +32,9 @@ class FormValidator {
         const errorInputMessage = this._form.querySelector(`.${input.id}-error`);
 
         input.validity.valid 
-        ? this._hideInputError(errorInputMessage)
+        ? this.hideInputError(errorInputMessage)
         : (this._showInputError(errorInputMessage),
-        errorInputMessage.textContent = input.validationMessage)
+        errorInputMessage.textContent = input.validationMessage);
     }
 
     //2.1 Функция для показа ошибки
@@ -43,8 +43,8 @@ class FormValidator {
         errorInputMessage.classList.add(this._errorInputActiveStyle);
     }
 
-    //2.2 Функция для скрытия ошибки (если ошибки нет и инпут валидирует)
-    _hideInputError(errorInputMessage) {
+    //2.2 Функция для скрытия ошибки (если ошибки нет и инпут валидирует или если открываем попап с формой заново)
+    hideInputError(errorInputMessage) {
         errorInputMessage.textContent = '';
         errorInputMessage.classList.remove(this._errorInputStyle);
     }
