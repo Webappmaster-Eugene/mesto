@@ -30,11 +30,13 @@ const profileStatus = document.querySelector('.profile__status'); //Поле в 
 const placeCardsParent = document.querySelector('.places__list'); //Блок в документе с карточками places
 
 //1. Валидация инпутов в попапах с изменением содержимого
-const addCardFormValidation = new FormValidator(settings, cardForm);
-addCardFormValidation.enableValidation();
 
-const profileFormValidation = new FormValidator(settings, profileForm);
-profileFormValidation.enableValidation();
+
+const addCardFormValidator = new FormValidator(settings, cardForm);
+addCardFormValidator.enableValidation();
+
+const profileFormValidator = new FormValidator(settings, profileForm);
+profileFormValidator.enableValidation();
 
 //2. Функции для работы с карточками place, генерации контента в блок places, вспомогательные функции
 
@@ -69,14 +71,10 @@ makeInitialCards(initialCards);
 
 //Пограничные функции - они между классом и хардкодом зависли..
 
-//Функция удаления ошибок
-function deleteInputErrors(form) {
-    const spanInputErrorsList = Array.from(form.querySelectorAll(`.${settings.errorClass}`));
-    spanInputErrorsList.forEach(errorInputMessage => {
-        addCardFormValidation.hideInputError(errorInputMessage);
-    });
+//Функция удаления ошибок при открытии/закрытии попапа 
+function deleteInputErrors(FormValidator) {
+    FormValidator.hideInputErrorsWhenOpens();
 }
-
 //2.2 Вспомогательные функции для настройки взаимодействия с карточкой, установки слушателей
 
 //Функция открытия попапа универсальная (активирует также слушатель на клавишу escape)
@@ -124,7 +122,7 @@ function resetPopUpForm(form) {
 profileOpen.addEventListener('click', () => {
     inputName.value = profileName.textContent;
     inputInfo.value = profileStatus.textContent;
-    deleteInputErrors(profileForm);
+    deleteInputErrors(profileFormValidator);
     openPopUp(popupChange);
 });
 //Обработчик отправки формы при нажатии на кнопку на изменение профиля
@@ -142,17 +140,16 @@ listenEventsProfileForm(profileForm);
 
 //Функция отправки формы изменения изменения профиля
 function submitProfileForm(event) {
-    const popup = profileForm.closest('.popup')
     event.preventDefault();
     handleProfileFormSubmit(profileForm);
-    closePopUp(popup);
+    closePopUp(popupChange);
 }
 
 //Функция для слушателя события клика на добавление новой карточки place
 postAdd.addEventListener('click', () => {
-    deleteInputErrors(cardForm);
+    deleteInputErrors(addCardFormValidator);
     resetPopUpForm(cardForm);
-    addCardFormValidation.changeButtonStyle();
+    addCardFormValidator.changeButtonStyle();
     openPopUp(popupAdd);
 });
 //Обработчик отправки формы при нажатии на кнопку на добавление карточки place
@@ -173,11 +170,10 @@ listenEventsCardForm(cardForm);
 
 //Функция отправки формы добавления новой карточки place
 function submitCardForm(event) {
-    const popupCardForm = cardForm.closest('.popup')
     event.preventDefault();
     handleCardFormSubmit();
     event.target.reset();
-    closePopUp(popupCardForm);
+    closePopUp(popupAdd);
 }
 
 //Функция для просмотра карточки place - открытие попапа

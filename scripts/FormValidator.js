@@ -32,7 +32,7 @@ class FormValidator {
         const errorInputMessage = this._form.querySelector(`.${input.id}-error`);
 
         input.validity.valid 
-        ? this.hideInputError(errorInputMessage)
+        ? this._hideInputError(errorInputMessage)
         : (this._showInputError(errorInputMessage),
         errorInputMessage.textContent = input.validationMessage);
     }
@@ -44,9 +44,19 @@ class FormValidator {
     }
 
     //2.2 Функция для скрытия ошибки (если ошибки нет и инпут валидирует или если открываем попап с формой заново)
-    hideInputError(errorInputMessage) {
+    _hideInputError(errorInputMessage) {
         errorInputMessage.textContent = '';
         errorInputMessage.classList.remove(this._errorInputStyle);
+    }
+
+    //2.3 Функция для удаления отображения всех ошибок (в цикле) в инпутах форм 
+    //(если ошибки нет и инпут валидирует или если открываем попап с формой заново)
+    hideInputErrorsWhenOpens() {
+        const spanInputErrorsList = Array.from(this._form.querySelectorAll(`.${this._errorInputActiveStyle}`));
+        spanInputErrorsList.forEach(errorInputMessage => {
+        errorInputMessage.textContent = '';
+        errorInputMessage.classList.remove(this._errorInputActiveStyle);
+        });
     }
 
     //3 Включить валидацию формы
