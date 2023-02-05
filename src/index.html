@@ -1,38 +1,36 @@
 <!DOCTYPE html>
-<html lang="ru" class="html">
-
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Жак-Ив Кусто">
         <link rel="shortcut icon"
-            href="./images/avatar.jpg"
+            href="<%=require('./images/avatar.jpg')%>"
             type="image/x-icon">
-        <link rel="stylesheet" href="./pages/index.css" type="text/css">
+        <!-- <link rel="stylesheet" href="./pages/index.css" type="text/css"> -->
         <title>Путешествия в Mesto...</title>
     </head>
 
     <body class="page">
 
         <header class="header">
-            <a class="logo" href="#"><img class="logo__image" src="./images/svg_icons/logo.svg" alt="Фотография логотипа"></a>
+            <a class="logo" href="#"><img class="logo__image" src="<%=require('./images/svg_icons/logo.svg')%>" alt="Фотография логотипа"></a>
         </header>
 
         <main class="content">
             <section class="profile">
-                <img class="profile__avatar" src="./images/avatar.jpg" alt="Фотография пользователя">
+                <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Фотография пользователя">
                 <div class="profile__info">
                     <div class="profile__top-row">
                         <h1 class="profile__name">Жак-Ив Кусто</h1> 
                         <button class="profile__changer" type="button">
-                            <img class="profile__pen" src='./images/svg_icons/pen1.svg' alt="Изменить профиль">
+                            <img class="profile__pen" src="<%=require('./images/svg_icons/pen1.svg')%>" alt="Изменить профиль">
                         </button>
                     </div>
                     <p class="profile__status">Исследователь океана</p>
                 </div>
                 
                 <button class="profile__new-post-add" type="button">
-                    <img class="profile__plus" alt="Добавить новую публикацию" src="./images/svg_icons/plus1.svg">
+                    <img class="profile__plus" alt="Добавить новую публикацию" src="<%=require('./images/svg_icons/plus1.svg')%>">
                 </button>
             </section>
 
@@ -40,7 +38,7 @@
                 <ul class="places__list">
                     <template id="template-place">
                         <li class="place">
-                            <img class="place__photo" src="./images/karachaevsk.jpg" alt="Фотография Карачаевска">
+                            <img class="place__photo" src="<%=require('./images/karachaevsk.jpg')%>" alt="Фотография Карачаевска">
                             <button class="place__delete" type="button"></button>
                             <div class="place__info">
                                 <h2 class="place__name">Карачаевск</h2>
@@ -86,13 +84,13 @@
 
         <div class="popup popup_type_place">
             <div class="popup__container popup__container_place">
-                <img class="popup__photo" alt="Фото от автора" src="./images/dombai.png">
+                <img class="popup__photo" alt="Фото от автора" src="<%=require('./images/dombai.png')%>">
                 <h2 class="popup__description"></h2>
                 <button class="popup__close" type="button"></button>
             </div>
         </div>
         
-        <script type="module" src="./scripts/script.js"></script>
+        <!-- <script type="module" src="./scripts/script.js"></script> -->
 
     </body>
 </html>
