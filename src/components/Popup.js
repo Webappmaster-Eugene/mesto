@@ -7,11 +7,12 @@ class Popup {
 
     open() {
         this._popup.classList.add('popup_opened');
+        document.addEventListener('keydown', this._closeClickEsc);
         this.setEventListeners();
     }
 
     close() {
-        this._popup.removeEventListener('keydown', this._handleEscClose);
+        document.removeEventListener('keydown', this._handleEscClose);
         this._popup.classList.remove('popup_opened');
     }
 
@@ -22,7 +23,6 @@ class Popup {
     }
 
     setEventListeners() {
-        document.addEventListener('keydown', this._closeClickEsc);
         this._popup.addEventListener('mousedown', (event) => {
             if (event.target === this._popup) this.close();
         });

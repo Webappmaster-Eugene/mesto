@@ -1,3 +1,4 @@
+//Файл со всеми константами в проектк
 export const profileOpen = document.querySelector('.profile__changer'); //Иконка для изменения профиля
 export const postAdd = document.querySelector('.profile__new-post-add'); //Иконка плюса для добавления новой карточки публикации
 

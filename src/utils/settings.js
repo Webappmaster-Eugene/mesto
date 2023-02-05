@@ -1,3 +1,4 @@
+//Настройки для работы валидации форм - объект с CSS-классами
 const settings = {
     formSelector: '.popup__inputs',
     inputSelector: '.popup__input',

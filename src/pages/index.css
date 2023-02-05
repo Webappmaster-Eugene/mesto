@@ -1,3 +1,4 @@
+/* Основной файл .css для сборки всех других стилей - импорт normilize, шрифтов, других стилей */
 @import url('../vendor/normalize.css');
 @import url('../vendor/fonts/fonts.css');
 

@@ -1,3 +1,4 @@
+//Самый основной файл .js - в него приходят все классы, начинается сборка Webpack, здесь открывается приложение
 import './index.css';
 
 import initialCards from '../utils/initialCards.js'; //Объект с карточками по умолчанию
@@ -13,75 +14,84 @@ import { UserInfo } from '../components/UserInfo'; //Класс для рабо�
 
 //1. Валидация инпутов в попапах с изменением содержимого
 
+//1.1 Валидация формы с добавлением карточки place
 const addCardFormValidator = new FormValidator(settings, cardForm);
 addCardFormValidator.enableValidation();
 
+//1.2 Валидация формы с изменением профиля пользователя
 const profileFormValidator = new FormValidator(settings, profileForm);
 profileFormValidator.enableValidation();
 
-//Для работы класса Section
+//Функция удаления ошибок при открытии/закрытии попапа 
+function deleteInputErrors(formValidator) {
+    formValidator.hideInputErrorsWhenOpens();
+}//предыдущая функция важная и никуда не относится, её сложно классифицировать
+
+
+//2. Создание основной секции с карточками places и функции для его работы
+
+//2.1 Функция создания html-представления карточки place для работы класса Section
 function createCard(cardFeaturesObject) {
     const card = new Card(cardFeaturesObject, '#template-place', handleCardClick);
     const cardNewPlace = card.createCard();
     return cardNewPlace;
 }
 
+//2.2 Функция для внедрения карточки (отображения, вставки в HTML-разметку) в Section
 function renderCard(cardData) {
+    console.log('index3');
     const cardElement = createCard(cardData);
     section.addItem(cardElement);
 }
 
-function handleCardClick(name, photoLink) {
-    const popupWithImage = new PopupWithImage('.popup_type_place', name, photoLink);
-    popupWithImage.setEventListeners();
-    popupWithImage.open();
-}
-
+//2.3 ИТОГ - создание объекта Section для создание секции с изображениями по умолчанию и генерации places
 const section = new Section({initialCards: initialCards, renderer: renderCard}, '.places__list');
 section.renderItems();
 
-//Функция удаления ошибок при открытии/закрытии попапа 
-function deleteInputErrors(formValidator) {
-    formValidator.hideInputErrorsWhenOpens();
+
+//Блок работы с попапами - просмотра карточки place (3.1), добавления карточки place (3.2) и изменения профиля пользователя (3.3)
+
+//3.1 Создание объекта для просмотра карточки place
+const popupWithImage = new PopupWithImage('.popup_type_place');
+
+function handleCardClick(imageName, photoLink) {
+    popupWithImage.open(imageName, photoLink);
+    popupWithImage.setEventListeners();
 }
-//предыдущая функция важная и никуда не относится, её сложно классифицировать
+
+const popupProfile = new PopupWithForm('.popup_type_change-profile', submitProfileForm);
+popupProfile.setEventListeners();
 
 //Функция отправки формы изменения изменения профиля
-function submitProfileForm(event) {
-    event.preventDefault();
-    handleProfileFormSubmit();
-    popupProfile.close();
+function submitProfileForm(objectInputsWithValues) {
+    handleProfileFormSubmit(objectInputsWithValues);
+    // popupProfile.close();
 }
 
 const userInfo = new UserInfo({htmlElementWithName: profileName, htmlElementWithInfo: profileStatus});
 //Обработчик отправки формы при нажатии на кнопку на изменение профиля
-const handleProfileFormSubmit = () => {
-    userInfo.setUserInfo({nameAuthor: inputName, infoAuthor: inputInfo});
+function handleProfileFormSubmit(objectInputsWithValues) {
+    userInfo.setUserInfo({nameAuthor: objectInputsWithValues["userName"], infoAuthor: objectInputsWithValues["userStatus"]});
 };
 
-//Функция для слушателя события клика на изменение профиля
+//!!!!!Функция для слушателя события клика на изменение профиля
 profileOpen.addEventListener('click', () => {
     inputName.value = userInfo.getUserInfo().nameAuthor;
     inputInfo.value = userInfo.getUserInfo().infoAuthor;
     deleteInputErrors(profileFormValidator);
     popupProfile.open();
 });
-const popupProfile = new PopupWithForm('.popup_type_change-profile', submitProfileForm);
 
+
+const publication = new PopupWithForm('.popup_type_add-publication', submitCardForm);
+publication.setEventListeners();
 //Функция отправки формы добавления новой карточки place
-function submitCardForm(event) {
-    event.preventDefault();
-    handleCardFormSubmit();
-    publication.close();
-}
-
 //Обработчик отправки формы при нажатии на кнопку на добавление карточки place
-function handleCardFormSubmit() {
-    const cardFeaturesObject = {
-        link: inputPhoto.value,
-        name: inputPlace.value
-    };
-    renderCard(cardFeaturesObject);
+
+function submitCardForm(objectInputsWithValues) {
+    console.log('index');
+    renderCard(objectInputsWithValues);
+    console.log('index2');
 }
 
 //Функция для слушателя события клика на добавление новой карточки place
@@ -91,4 +101,3 @@ postAdd.addEventListener('click', () => {
     publication.open();
 });
 
-const publication = new PopupWithForm('.popup_type_add-publication', submitCardForm);
