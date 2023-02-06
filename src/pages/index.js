@@ -39,7 +39,6 @@ function createCard(cardFeaturesObject) {
 
 //2.2 Функция для внедрения карточки (отображения, вставки в HTML-разметку) в Section
 function renderCard(cardData) {
-    console.log('index3');
     const cardElement = createCard(cardData);
     section.addItem(cardElement);
 }
@@ -62,17 +61,14 @@ function handleCardClick(imageName, photoLink) {
 const popupProfile = new PopupWithForm('.popup_type_change-profile', submitProfileForm);
 popupProfile.setEventListeners();
 
+const userInfo = new UserInfo({htmlElementWithName: profileName, htmlElementWithInfo: profileStatus});
+
 //Функция отправки формы изменения изменения профиля
 function submitProfileForm(objectInputsWithValues) {
-    handleProfileFormSubmit(objectInputsWithValues);
-    // popupProfile.close();
+    userInfo.setUserInfo({nameAuthor: objectInputsWithValues["userName"], infoAuthor: objectInputsWithValues["userStatus"]});
 }
 
-const userInfo = new UserInfo({htmlElementWithName: profileName, htmlElementWithInfo: profileStatus});
-//Обработчик отправки формы при нажатии на кнопку на изменение профиля
-function handleProfileFormSubmit(objectInputsWithValues) {
-    userInfo.setUserInfo({nameAuthor: objectInputsWithValues["userName"], infoAuthor: objectInputsWithValues["userStatus"]});
-};
+
 
 //!!!!!Функция для слушателя события клика на изменение профиля
 profileOpen.addEventListener('click', () => {
@@ -89,9 +85,7 @@ publication.setEventListeners();
 //Обработчик отправки формы при нажатии на кнопку на добавление карточки place
 
 function submitCardForm(objectInputsWithValues) {
-    console.log('index');
     renderCard(objectInputsWithValues);
-    console.log('index2');
 }
 
 //Функция для слушателя события клика на добавление новой карточки place

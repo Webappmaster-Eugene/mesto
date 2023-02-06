@@ -9,8 +9,8 @@ class UserInfo {
     }
 
     setUserInfo({nameAuthor, infoAuthor}) {
-        this._name.textContent = nameAuthor.value;
-        this._info.textContent = infoAuthor.value;
+        this._name.textContent = nameAuthor;
+        this._info.textContent = infoAuthor;
     }
 }
 
