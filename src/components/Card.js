@@ -61,8 +61,11 @@ class Card {
         this._makeLikeButton.classList.toggle('place__like_active');
     }
 
+
+
+
     // 2.2 Здесь навешивается функция для удаления карточки с экрана
-    removeCard() {
+    removeCardFromDOM() {
         this._cardPlace.remove();
     }
 
@@ -86,9 +89,11 @@ class Card {
         this._photoOfCard.addEventListener('click', () => {
             this._functionOpenPlacePopUp(this._name, this._photoLink)
         });
-        this._removeButton.addEventListener('click', () => {
-            this.removeCard();
+
+        this._removeButton.addEventListener('click', (cardId) => {
+            this._deleteCard(cardId);
         });
+
         this._makeLikeButton.addEventListener('click', () => {
             
             if (this._isCardLikedByCurrentUser()) {

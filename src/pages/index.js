@@ -4,7 +4,10 @@ import './index.css';
 
 import initialCards from '../utils/initialCards.js'; //Объект с карточками по умолчанию
 import settings from '../utils/settings.js'; //Объект с настройками для валидации
-import { profileOpen, avatarChanger, postAdd, profileForm, cardForm, avatarForm, inputName, inputInfo, profileName, profileStatus, profileAvatar} from '../utils/consts.js'; //Переменные для работы в index.js 
+
+import { profileOpen, avatarChanger, postAdd, profileForm, cardForm, avatarForm, inputName, inputInfo, profileName, profileStatus, profileAvatar} 
+from '../utils/consts.js'; //Переменные для работы в index.js 
+
 import { apiUrlOptions } from '../utils/apiData.js'; //Переменные для работы в index.js 
 
 import Card from '../components/Card.js'; //Класс карточки place с фотографиями
@@ -67,11 +70,13 @@ function createCard(cardFeaturesObject) {
         .catch((error) => {console.log(`Ошибка при удалениии лайка из карточки : ${error}`)})
     }), 
     deleteCard: ((cardId) => {
+        console.log(cardId);
         apiCall.deleteCard(cardId)
             .then(() => {
-                card.removeCard();
+                console.log(card);
+                card.removeCardFromDOM(cardId);
             })
-            .catch((error) => {console.log(`Ошибка при удалении карточки: ${error}`)})
+            .catch((error) => {console.log(`Ошибка при удалении карточки по API: ${error}`)})
     }), 
     functionOpenPlacePopUp: handleCardClick});
     const cardNewPlace = card.createCard();
