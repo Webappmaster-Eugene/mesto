@@ -1,0 +1,9 @@
+.popup__header_sure{
+    margin-bottom: 30px;
+}
+
+@media screen and (max-width: 631px) {
+    .popup__header_sure{
+        margin-bottom: 15px;
+    }
+}

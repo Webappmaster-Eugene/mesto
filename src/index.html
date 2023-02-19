@@ -4,8 +4,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="Жак-Ив Кусто">
+        <!-- Каждое использование ссылок 'href=' (в том числе для иконки, как здесь) нужно оборачивать в конструкцию из Lodash в связи с тем, что используем Webpack  -->
         <link rel="shortcut icon"
-            href="<%=require('./images/avatar.jpg')%>"
+            href="<%=require('./images/logo.svg')%>"
             type="image/x-icon">
         <!-- Опускаем объявление использования .css в связи с тем, что используем Webpack-->
         <!-- <link rel="stylesheet" href="./pages/index.css" type="text/css"> -->
@@ -15,21 +16,27 @@
     <body class="page">
 
         <header class="header">
-            <!-- Каждое использование картинок или ссылок с src = нужно оборачивать в конструкцию из Lodash в связи с тем, что используем Webpack  -->
+            <!-- Каждое использование картинок с 'src=' нужно оборачивать в конструкцию из Lodash в связи с тем, что используем Webpack  -->
             <a class="logo" href="#"><img class="logo__image" src="<%=require('./images/svg_icons/logo.svg')%>" alt="Фотография логотипа"></a>
         </header>
 
         <main class="content">
             <section class="profile">
-                <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Фотография пользователя">
+                <div class="profile__avatar-container">
+                    <img class="profile__avatar" src="<%=require('./images/avatar.jpg')%>" alt="Фотография пользователя">
+                    <!-- Новая ручка для изменения аватара пользователя -->
+                    <button class="profile__avatar-changer"></button>
+                </div>
+
                 <div class="profile__info">
                     <div class="profile__top-row">
-                        <h1 class="profile__name">Жак-Ив Кусто</h1> 
+                        <h1 class="profile__name"></h1>
+                        <!-- Ручка для изменения информации о пользователе -->
                         <button class="profile__changer" type="button">
                             <img class="profile__pen" src="<%=require('./images/svg_icons/pen1.svg')%>" alt="Изменить профиль">
                         </button>
                     </div>
-                    <p class="profile__status">Исследователь океана</p>
+                    <p class="profile__status"></p>
                 </div>
                 
                 <button class="profile__new-post-add" type="button">
@@ -39,13 +46,17 @@
 
             <section class="places">
                 <ul class="places__list">
+                    <!-- Шаблон карточки места place -->
                     <template id="template-place">
                         <li class="place">
                             <img class="place__photo" src="<%=require('./images/karachaevsk.jpg')%>" alt="Фотография Карачаевска">
                             <button class="place__delete" type="button"></button>
                             <div class="place__info">
-                                <h2 class="place__name">Карачаевск</h2>
-                                <button class="place__like" type="button"></button>
+                                <h2 class="place__name">Название</h2>
+                                <div class="place__like-container">
+                                    <p class="place__like-count">0</p>
+                                    <button class="place__like" type="button"></button>
+                                </div>
                             </div>
                         </li>
                     </template>
@@ -54,9 +65,10 @@
         </main>
 
         <footer class="footer">
-            <p class="footer__copyright">© 2022 Mesto Russia</p>
+            <p class="footer__copyright">© 2023 Mesto by ©Webappmaster</p>
         </footer>
 
+        <!-- Попап для изменения профиля пользователя -->
         <div class="popup popup_type_change-profile">
             <div class="popup__container">
                 <button class="popup__close" type="button"></button>
@@ -71,6 +83,7 @@
             </div>
         </div>
 
+        <!-- Попап для добавления новой публикации карточки place -->
         <div class="popup popup_type_add-publication">
             <div class="popup__container">
                 <button class="popup__close" type="button"></button>
@@ -85,6 +98,7 @@
             </div>
         </div> 
 
+        <!-- Попап просмотра места (карточки place) -->
         <div class="popup popup_type_place">
             <div class="popup__container popup__container_place">
                 <img class="popup__photo" alt="Фото от автора" src="<%=require('./images/dombai.png')%>">
@@ -92,7 +106,30 @@
                 <button class="popup__close" type="button"></button>
             </div>
         </div>
-        <!-- Каждое использование скриптов не нужно объявлять отдельно с использованием , так как при использовании Webpack и так начинает работь с файлами js-->
+
+        <!-- Попап для вопроса, уверены ли вы, что хотите удалить публикацию из профиля? -->
+        <div class="popup popup_type_sure">
+            <div class="popup__container popup__container_sure">
+                <h2 class="popup__header popup__header_sure">Вы уверены?</h2>
+                <button class="popup__close" type="button"></button>
+                <button class="popup__button" type="submit">Да</button>
+            </div>
+        </div>
+
+        <!-- Попап для изменения аватара пользователя из профиля-->
+        <div class="popup popup_type_change_avatar">
+            <div class="popup__container">
+                <button class="popup__close" type="button"></button>
+                <h2 class="popup__header">Обновить аватар</h2>
+                <form class="popup__inputs" name="avatar-form" method="post">
+                    <input type="url" name="link" class="popup__input popup__input_type_avatar" id="popup__input-error_avatar" placeholder="Ссылка на новый аватар" required>
+                    <span class="popup__input-error popup__input-error_avatar-error">Some text</span>
+                    <button class="popup__button" type="submit">Сохранить</button>
+                </form>
+            </div>
+        </div> 
+
+        <!-- Каждое использование скриптов не нужно объявлять отдельно с использованием script, так как при использовании Webpack - он и так начинает работать с файлами js (через входную точку index.js)-->
         <!-- <script type="module" src="./scripts/script.js"></script> -->
     </body>
 </html>

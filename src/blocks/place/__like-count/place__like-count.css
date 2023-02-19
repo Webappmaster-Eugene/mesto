@@ -1,0 +1,9 @@
+.place__like-count{
+    font-size: 13px;
+    line-height: 16px;
+    margin: 0;
+    color: black;
+    font-weight: 400;
+    text-align: center;
+    margin-top: 3px;
+}

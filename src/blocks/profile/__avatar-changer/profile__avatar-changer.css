@@ -1,0 +1,27 @@
+.profile__avatar-changer{
+    background-image: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    z-index: 3;
+    padding: 0;
+    box-sizing: border-box;
+    border: 0;
+    width: 120px;
+    height: 120px;
+    aspect-ratio: 1/1;
+    border-radius: 100%;
+    opacity: 0;   
+}
+
+.profile__avatar-changer:hover{
+    opacity: 0.8;
+    background-color: black;
+    background-image: url('../../../images/svg_icons/penforavatar.svg');
+    cursor: pointer; 
+}
+

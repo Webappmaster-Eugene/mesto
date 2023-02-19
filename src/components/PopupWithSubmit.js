@@ -1,16 +1,11 @@
 import Popup from './Popup.js'; //Класс для открытия и закрытия любых попапов универсальный
 
-class PopupWithForm extends Popup {
+class PopupWithSubmit extends Popup {    
     constructor(popupSelector, submitFormFunction) {
         super(popupSelector);
         this._form = this._popup.querySelector('form');
         this._submitFormFunction = submitFormFunction;
-        this._button = this._form.querySelector('.popup__button');
         this._inputsForm = [...this._form.querySelectorAll('.popup__input')];
-    }
-
-    loadingData(buttonText) {
-        this._button.textContent = buttonText;
     }
 
     _getInputValues() {
@@ -36,11 +31,11 @@ class PopupWithForm extends Popup {
     }
 }
 
-export default PopupWithForm;
+export default PopupWithSubmit;
 
 // import Popup from './Popup.js'; //Класс для открытия и закрытия любых попапов универсальный
 
-// class PopupWithForm extends Popup {
+// class PopupWithSubmit extends Popup {    
 //     constructor(popupSelector, submitFormFunction) {
 //         super(popupSelector);
 //         this._form = this._popup.querySelector('form');
@@ -71,4 +66,4 @@ export default PopupWithForm;
 //     }
 // }
 
-// export default PopupWithForm;
+// export default PopupWithSubmit;

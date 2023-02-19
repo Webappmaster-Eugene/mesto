@@ -4,7 +4,6 @@
     max-width: 1280px;
     width: 100%;
     padding: 0 200px;
-    box-sizing: border-box;
     font-family: 'Inter', Arial, sans-serif;
     font-weight: 400;
     font-size: 24px;
@@ -13,11 +12,12 @@
     color: white;
     margin: 0 auto;
     min-height: 100vh;
+    box-sizing: border-box;
 }
 
 @media screen and (max-width: 1279px){
     .page{
-        max-width: 880px;
+        max-width: 890px;
         padding: 0 48px;
     }
 }

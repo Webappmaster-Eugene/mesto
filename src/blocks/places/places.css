@@ -2,6 +2,7 @@
     display: flex;
     margin-top: 47px;
     margin-bottom: 67px;
+    box-sizing: border-box;
 }
 
 @media screen and (max-width: 549px){
@@ -9,5 +10,6 @@
         margin-bottom: 48px;
         padding: 0 19px 0 19px;
         margin-top: 36px;
+        justify-content: center;
     }
 }

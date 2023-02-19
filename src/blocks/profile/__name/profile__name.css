@@ -11,12 +11,19 @@
     max-width: 100%;
 }
 
+/* @media screen and (max-width: 576px){
+    .profile__name{
+        margin-top: 12px;
+    }
+} */
+
 @media screen and (max-width: 549px){
     .profile__name{
+        margin-top: 0;
         padding-right: 10px;
         font-size: 27px;
         line-height: 33px;
         text-align: center;
-        padding-left: 28px;
+        padding-left: 14px;
     }
 }
