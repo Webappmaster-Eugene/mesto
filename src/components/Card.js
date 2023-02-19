@@ -90,8 +90,8 @@ class Card {
             this._functionOpenPlacePopUp(this._name, this._photoLink)
         });
 
-        this._removeButton.addEventListener('click', (cardId) => {
-            this._deleteCard(cardId);
+        this._removeButton.addEventListener('click', () => {
+            this._deleteCard(this._id);
         });
 
         this._makeLikeButton.addEventListener('click', () => {

@@ -47,11 +47,14 @@ function deleteInputErrors(formValidator) {
     formValidator.hideInputErrorsWhenOpens();
 }//предыдущая функция важная и никуда не относится, её сложно классифицировать
 
+const deleteCardPopup = new PopupWithSubmit('.popup_type_sure');
+deleteCardPopup.setEventListeners();
 
 //2. Создание основной секции с карточками places и функции для его работы
 
 //2.1 Функция создания html-представления карточки place для работы класса Section !!!!!САМАЯ ВАЖНАЯ ФУНКЦИЯ
 function createCard(cardFeaturesObject) {
+
     const card = new Card(cardFeaturesObject, '#template-place', 
     {
     currentUserId: currentUserId,
@@ -70,15 +73,23 @@ function createCard(cardFeaturesObject) {
         .catch((error) => {console.log(`Ошибка при удалениии лайка из карточки : ${error}`)})
     }), 
     deleteCard: ((cardId) => {
-        console.log(cardId);
+        deleteCardPopup.open();
+        deleteCardPopup.loadingData('Сохраняется');
+        deleteCardPopup.chooseCallbackHandler(() => {
         apiCall.deleteCard(cardId)
             .then(() => {
+                console.log(cardId);
                 console.log(card);
                 card.removeCardFromDOM(cardId);
+                deleteCardPopup.loadingData('Да');
+                deleteCardPopup.close();
             })
             .catch((error) => {console.log(`Ошибка при удалении карточки по API: ${error}`)})
+        });
     }), 
-    functionOpenPlacePopUp: handleCardClick});
+    functionOpenPlacePopUp: handleCardClick
+    });
+
     const cardNewPlace = card.createCard();
     return cardNewPlace;
 }
@@ -191,7 +202,7 @@ postAdd.addEventListener('click', () => {
 });
 
 
-const changeAvatarWithPopup = new PopupWithForm('.popup_type_change_avatar', 
+const changeAvatarWithPopup = new PopupWithForm('.popup_type_change-avatar', 
     (objectInputsWithValues) => {
         changeProfileInfoPopup.loadingData('Сохранение');
         apiCall.changeAvatarProfile(objectInputsWithValues)
