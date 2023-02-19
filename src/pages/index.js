@@ -2,13 +2,12 @@
 //Основной файл .css, в который записывают файлы с классами стилей
 import './index.css';
 
-import initialCards from '../utils/initialCards.js'; //Объект с карточками по умолчанию
 import settings from '../utils/settings.js'; //Объект с настройками для валидации
 
 import { profileOpen, avatarChanger, postAdd, profileForm, cardForm, avatarForm, inputName, inputInfo, profileName, profileStatus, profileAvatar} 
 from '../utils/consts.js'; //Переменные для работы в index.js 
 
-import { apiUrlOptions } from '../utils/apiData.js'; //Переменные для работы в index.js 
+import { apiUrlOptions } from '../utils/apiData.js'; //Настройки для работы с API
 
 import Card from '../components/Card.js'; //Класс карточки place с фотографиями
 import FormValidator from '../components/FormValidator.js'; //Класс для валидации попапов (по инпутам и вводу) - карточки и профиля
@@ -24,13 +23,13 @@ let currentUserId;
 const apiCall = new Api(apiUrlOptions);
 let initCards = apiCall.getInitialCards();
 
-// apiCall.addNewCard({name: "Лучше гор-Толя", link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg"});
-// console.log(apiCall.getInitialCards());
-// apiCall.getInfoProfile();
-// apiCall.changeInfoProfile({name: "James", about: "Bonder"});
+//Создание объекта Section для создание секции с изображениями по умолчанию и генерации places
+// Генерация карточек с помощью Api
+const section = new Section({renderer: renderCard}, '.places__list');
 
-
-
+initCards.then(res => {
+    section.renderItems(res);
+})
 
 //1. Валидация инпутов в попапах с изменением содержимого
 
@@ -42,19 +41,20 @@ addCardFormValidator.enableValidation();
 const profileFormValidator = new FormValidator(settings, profileForm);
 profileFormValidator.enableValidation();
 
+//1.3 Валидация формы с изменением аватарки пользователя
+const changeAvatarValidator = new FormValidator(settings, avatarForm);
+changeAvatarValidator.enableValidation();
+
 //Функция удаления ошибок при открытии/закрытии попапа 
 function deleteInputErrors(formValidator) {
     formValidator.hideInputErrorsWhenOpens();
-}//предыдущая функция важная и никуда не относится, её сложно классифицировать
-
-const deleteCardPopup = new PopupWithSubmit('.popup_type_sure');
-deleteCardPopup.setEventListeners();
+}
+//предыдущая функция важная и никуда не относится, её сложно классифицировать
 
 //2. Создание основной секции с карточками places и функции для его работы
 
-//2.1 Функция создания html-представления карточки place для работы класса Section !!!!!САМАЯ ВАЖНАЯ ФУНКЦИЯ
+//2.1 Функция создания html-представления карточки place для работы класса Section
 function createCard(cardFeaturesObject) {
-
     const card = new Card(cardFeaturesObject, '#template-place', 
     {
     currentUserId: currentUserId,
@@ -94,39 +94,26 @@ function createCard(cardFeaturesObject) {
     return cardNewPlace;
 }
 
-//2.2 Функция для внедрения карточки (отображения, вставки в HTML-разметку) в Section
+//2.2 Функция для внедрения карточки (отображения, вставки в DOM) в Section
 function renderCard(cardData) {
     const cardElement = createCard(cardData);
     section.addItem(cardElement);
 }
 
-//2.3 ИТОГ - создание объекта Section для создание секции с изображениями по умолчанию и генерации places
-
-//Старый статический способ из готового объекта c places
-// const section = new Section({initialCards: initialCards, renderer: renderCard}, '.places__list');
-// section.renderItems();
-
-// Новый способ генерации с помощью Api
-
-const section = new Section({renderer: renderCard}, '.places__list');
-
-initCards.then(res => {
-    section.renderItems(res);
-})
-
-
-
-//Блок работы с попапами - просмотра карточки place (3.1), добавления карточки place (3.2) и изменения профиля пользователя (3.3)
+//3. Блок работы с попапами - просмотра карточки place (3.1), изменения профиля пользователя (3.2), добавления карточки place (3.2), изменения аватарки пользователя (3.4)
+const deleteCardPopup = new PopupWithSubmit('.popup_type_sure');
+deleteCardPopup.setEventListeners();
 
 //3.1 Создание объекта для просмотра карточки place
 const popupWithImage = new PopupWithImage('.popup_type_place');
 popupWithImage.setEventListeners();
 
+//Функция-обработчик открытия попапа с изображением карточки place
 function handleCardClick(imageName, photoLink) {
     popupWithImage.open(imageName, photoLink);
 }
 
-
+//3.2 Попап работы с изменением профиля пользователя
 const changeProfileInfoPopup = new PopupWithForm('.popup_type_change-profile', 
     (objectInputsWithValues) => {
         changeProfileInfoPopup.loadingData('Сохранение...');
@@ -142,11 +129,12 @@ const changeProfileInfoPopup = new PopupWithForm('.popup_type_change-profile',
             }, 0);
         })
     });
-changeProfileInfoPopup.setEventListeners();
+    changeProfileInfoPopup.setEventListeners();
 
-
+//Класс для работы попапа с изменением профиля пользователя
 const userInfo = new UserInfo({htmlElementWithName: profileName, htmlElementWithInfo: profileStatus, htmlElementWithAvatar: profileAvatar});
 
+//Установка имени, статуса и аватарки профиля изначально при загрузке страницы
 apiCall.getInfoProfile()
     .then (res => {
         userInfo.setUserInfo({nameAuthor: res.name, infoAuthor: res.about});
@@ -157,18 +145,7 @@ apiCall.getInfoProfile()
         console.log(`Ошибка получения данных о пользователе - getInfoProfile завершен неудачно: ${err}`);
 });
 
-//Функция отправки формы изменения изменения профиля
-
-
-//!!!!!Функция для слушателя события клика на изменение профиля
-profileOpen.addEventListener('click', () => {
-    inputName.value = userInfo.getUserInfo().nameAuthor;
-    inputInfo.value = userInfo.getUserInfo().infoAuthor;
-    deleteInputErrors(profileFormValidator);
-    changeProfileInfoPopup.open();
-});
-
-
+//3.3 Попап для добавления новой карточки place
 const addPublicationWithPopup = new PopupWithForm('.popup_type_add-publication', 
     (objectInputsWithValues) => {
         addPublicationWithPopup.loadingData('Загрузка...');
@@ -185,23 +162,9 @@ const addPublicationWithPopup = new PopupWithForm('.popup_type_add-publication',
             }, 0);
         })
     });
-addPublicationWithPopup.setEventListeners();
+    addPublicationWithPopup.setEventListeners();
 
-//Функция отправки формы добавления новой карточки place
-//Обработчик отправки формы при нажатии на кнопку на добавление карточки place
-
-function submitCardForm(objectInputsWithValues) {
-    renderCard(objectInputsWithValues);
-}
-
-//Функция для слушателя события клика на добавление новой карточки place
-postAdd.addEventListener('click', () => {
-    deleteInputErrors(addCardFormValidator);
-    addCardFormValidator.changeButtonStyle();
-    addPublicationWithPopup.open();
-});
-
-
+//3.4 Попап для изменения аватарки пользователя
 const changeAvatarWithPopup = new PopupWithForm('.popup_type_change-avatar', 
     (objectInputsWithValues) => {
         changeProfileInfoPopup.loadingData('Сохранение');
@@ -217,12 +180,24 @@ const changeAvatarWithPopup = new PopupWithForm('.popup_type_change-avatar',
                 }, 0);
         })
 });
-    const changeAvatarValidator = new FormValidator(settings, avatarForm);
-    changeAvatarValidator.enableValidation();
-
     changeAvatarWithPopup.setEventListeners();
 
+//Функция для слушателя события клика на изменение профиля
+profileOpen.addEventListener('click', () => {
+    inputName.value = userInfo.getUserInfo().nameAuthor;
+    inputInfo.value = userInfo.getUserInfo().infoAuthor;
+    deleteInputErrors(profileFormValidator);
+    changeProfileInfoPopup.open();
+});
 
+//Функция для слушателя события клика на добавление новой карточки place
+postAdd.addEventListener('click', () => {
+    deleteInputErrors(addCardFormValidator);
+    addCardFormValidator.changeButtonStyle();
+    addPublicationWithPopup.open();
+});
+
+//Функция для слушателя события клика на добавление новой карточки place
 avatarChanger.addEventListener('click', () => {
     deleteInputErrors(changeAvatarValidator);
     addCardFormValidator.changeButtonStyle();

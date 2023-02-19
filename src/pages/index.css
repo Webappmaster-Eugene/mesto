@@ -2,21 +2,27 @@
 @import url('../vendor/normalize.css');
 @import url('../vendor/fonts/fonts.css');
 
+/* стили для основного контента*/
 @import url('../blocks/html/html.css');
 @import url('../blocks/page/page.css');
 @import url('../blocks/content/content.css');
 
+/* стили для лого*/
 @import url('../blocks/logo/logo.css');
 @import url('../blocks/logo/__image/logo__image.css');
 
+/* стили для хэдэра*/
 @import url('../blocks/header/header.css');
 
+/* стили для футера*/
 @import url('../blocks/footer/footer.css');
 @import url('../blocks/footer/__copyright/footer__copyright.css');
 
+/* стили для всего блока places*/
 @import url('../blocks/places/places.css');
 @import url('../blocks/places/__list/places__list.css');
 
+/* стили для карточки place*/
 @import url('../blocks/place/place.css');
 @import url('../blocks/place/__photo/place__photo.css');
 @import url('../blocks/place/__photo/place__photo.css');
@@ -28,6 +34,7 @@
 @import url('../blocks/place/__name/place__name.css');
 @import url('../blocks/place/__delete/place__delete.css');
 
+/* стили для всех попапов */
 @import url('../blocks/popup/popup.css');
 @import url('../blocks/popup/__container/popup__container.css');
 @import url('../blocks/popup/__container/_place/popup__container_place.css');
@@ -46,6 +53,7 @@
 @import url('../blocks/popup/_type/popup_type_place.css');
 @import url('../blocks/popup/_opened/popup_opened.css');
 
+/* стили для блока профиля */
 @import url('../blocks/profile/profile.css');
 @import url('../blocks/profile/__avatar-container/profile__avatar-container.css');
 @import url('../blocks/profile/__avatar/profile__avatar.css');
