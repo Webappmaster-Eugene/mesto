@@ -23,41 +23,27 @@ let currentUserId;
 const apiCall = new Api(apiUrlOptions);
 
 //Создание объекта Section для создание секции с изображениями по умолчанию и генерации places
-// Генерация карточек с помощью Api
 const section = new Section({renderer: renderCard}, '.places__list');
-
-// let initCards = apiCall.getInitialCards();
-// initCards.then(res => {
-//     section.renderItems(res);
-// })
 
 // //Класс для работы попапа с изменением профиля пользователя
 const userInfo = new UserInfo({htmlElementWithName: profileName, htmlElementWithInfo: profileStatus, htmlElementWithAvatar: profileAvatar});
 
-// //Установка имени, статуса и аватарки профиля изначально при загрузке страницы
-// apiCall.getInfoProfile()
-//     .then (res => {
-//         userInfo.setUserInfo({nameAuthor: res.name, infoAuthor: res.about});
-//         userInfo.setUserAvatar(res.avatar);
-//         currentUserId = res._id;
-//     })
-//     .catch((err) => {
-//         console.log(`Ошибка получения данных о пользователе - getInfoProfile завершен неудачно: ${err}`);
-// });
+// Установка имени, статуса и аватарки профиля изначально при загрузке страницы
+// Генерация карточек с помощью Api
+// Делаем это через Promise.all, чтобы дождаться всез запросов с API 
 
 Promise.all([apiCall.getInfoProfile(), apiCall.getInitialCards()])
-// тут деструктурируете ответ от сервера, чтобы было понятнее, что пришло
-  .then(([userData, cards]) => {
-    userInfo.setUserInfo({nameAuthor: userData.name, infoAuthor: userData.about});
-            userInfo.setUserAvatar(userData.avatar);
-            currentUserId = userData._id;
-      section.renderItems(cards);
-  })
-  .catch(err => {
-    console.log(`Ошибка получения данных о пользователе - getInfoProfile завершен неудачно: ${err}`);
-  });
+    // тут деструктурируется ответ от сервера, чтобы было понятнее, что пришло
+    .then(([userData, cards]) => {
+        userInfo.setUserInfo({nameAuthor: userData.name, infoAuthor: userData.about});
+        userInfo.setUserAvatar(userData.avatar);
+        currentUserId = userData._id;
 
-
+        section.renderItems(cards);
+    })
+    .catch(err => {
+        console.log(`Ошибка при получении данных о пользователе или генерации карточек по умолчанию: ${err}`);
+    });
 
 //1. Валидация инпутов в попапах с изменением содержимого
 
@@ -183,21 +169,20 @@ const addPublicationWithPopup = new PopupWithForm('.popup_type_add-publication',
 //3.4 Попап для изменения аватарки пользователя
 const changeAvatarWithPopup = new PopupWithForm('.popup_type_change-avatar', 
     (objectInputsWithValues) => {
-        changeProfileInfoPopup.loadingData('Сохранение');
+        changeAvatarWithPopup.loadingData('Сохранение');
         apiCall.changeAvatarProfile(objectInputsWithValues)
             .then((response) => {
                 userInfo.setUserAvatar(response.avatar);
-                changeProfileInfoPopup.close();
+                changeAvatarWithPopup.close();
             })
             .catch((reject) => {console.log(`Ошибка при изменении аватарки в профиле: ${reject}`)})
             .finally(() => {
                 setTimeout(() => {
-                    changeProfileInfoPopup.loadingData('Сохранить');
+                    changeAvatarWithPopup.loadingData('Сохранить');
                 }, 0);
         })
 });
     changeAvatarWithPopup.setEventListeners();
-
 
 //Функция для слушателя события клика на изменение профиля
 profileOpen.addEventListener('click', () => {
@@ -219,6 +204,6 @@ postAdd.addEventListener('click', () => {
 //Функция для слушателя события клика на добавление новой карточки place
 avatarChanger.addEventListener('click', () => {
     deleteInputErrors(changeAvatarValidator);
-    addCardFormValidator.changeButtonStyle();
+    changeAvatarValidator.changeButtonStyle();
     changeAvatarWithPopup.open();
 });
