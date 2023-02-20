@@ -25,13 +25,32 @@ class PopupWithForm extends Popup {
         this._form.reset();
         super.close();
     }
-
+//     Если будет интересно, можно сделать так, чтобы внутрь обработчика сабмита уходила цепочка промиса (then, finally), чтобы можно было универсально закрывать попапы в then, и возвращать текст кнопки сабмита в finally:
+//     setEventListeners() {
+//       super.setEventListeners();
+      
+//       this._form.addEventListener('submit', () => {
+//         // перед запросом сохраняем изначальный текст кнопки
+//         const initialText = this._submitButton.textContent;
+//         // меняем его, чтобы показать пользователю ожидание
+//         this._submitButton.textContent = 'Сохранение...';
+//         this._submitForm(this._getInputValues())
+//           .then(() => this.close()) // закрывается попап в `then`
+//           .finally(() => {
+//             this._submitButton.textContent = initialText;
+//           }) // в любом случае меняется текст кнопки обратно на начальный в `finally`
+//       });
+//     }
+  
+   
+//   Тогда не нужно будет дублировать код во всех обработчиках сабмита в index.js.  
+//   Обратите внимание, что нужно будет прописать return перед вызовом метода api  в index.js, чтобы функция сабмита возвращала промис и цепочка внутри PopupWithForm работала
     setEventListeners() {
         super.setEventListeners();
         this._form.addEventListener('submit', (event) => {
             event.preventDefault();
             this._submitFormFunction(this._getInputValues());
-            this.close();
+            // this.close();
         });
     }
 }

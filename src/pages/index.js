@@ -21,15 +21,43 @@ import { Api } from '../components/Api.js'; //Класс для работы с 
 let currentUserId;
 //Обращение к API для операций
 const apiCall = new Api(apiUrlOptions);
-let initCards = apiCall.getInitialCards();
 
 //Создание объекта Section для создание секции с изображениями по умолчанию и генерации places
 // Генерация карточек с помощью Api
 const section = new Section({renderer: renderCard}, '.places__list');
 
-initCards.then(res => {
-    section.renderItems(res);
-})
+// let initCards = apiCall.getInitialCards();
+// initCards.then(res => {
+//     section.renderItems(res);
+// })
+
+// //Класс для работы попапа с изменением профиля пользователя
+const userInfo = new UserInfo({htmlElementWithName: profileName, htmlElementWithInfo: profileStatus, htmlElementWithAvatar: profileAvatar});
+
+// //Установка имени, статуса и аватарки профиля изначально при загрузке страницы
+// apiCall.getInfoProfile()
+//     .then (res => {
+//         userInfo.setUserInfo({nameAuthor: res.name, infoAuthor: res.about});
+//         userInfo.setUserAvatar(res.avatar);
+//         currentUserId = res._id;
+//     })
+//     .catch((err) => {
+//         console.log(`Ошибка получения данных о пользователе - getInfoProfile завершен неудачно: ${err}`);
+// });
+
+Promise.all([apiCall.getInfoProfile(), apiCall.getInitialCards()])
+// тут деструктурируете ответ от сервера, чтобы было понятнее, что пришло
+  .then(([userData, cards]) => {
+    userInfo.setUserInfo({nameAuthor: userData.name, infoAuthor: userData.about});
+            userInfo.setUserAvatar(userData.avatar);
+            currentUserId = userData._id;
+      section.renderItems(cards);
+  })
+  .catch(err => {
+    console.log(`Ошибка получения данных о пользователе - getInfoProfile завершен неудачно: ${err}`);
+  });
+
+
 
 //1. Валидация инпутов в попапах с изменением содержимого
 
@@ -74,17 +102,19 @@ function createCard(cardFeaturesObject) {
     }), 
     deleteCard: ((cardId) => {
         deleteCardPopup.open();
-        deleteCardPopup.loadingData('Сохраняется');
         deleteCardPopup.chooseCallbackHandler(() => {
+        deleteCardPopup.loadingData('Сохраняется');
         apiCall.deleteCard(cardId)
             .then(() => {
-                console.log(cardId);
-                console.log(card);
                 card.removeCardFromDOM(cardId);
-                deleteCardPopup.loadingData('Да');
                 deleteCardPopup.close();
             })
             .catch((error) => {console.log(`Ошибка при удалении карточки по API: ${error}`)})
+            .finally(() => {
+                setTimeout(() => {
+                    deleteCardPopup.loadingData('Да');
+                }, 0);
+            })
         });
     }), 
     functionOpenPlacePopUp: handleCardClick
@@ -120,30 +150,16 @@ const changeProfileInfoPopup = new PopupWithForm('.popup_type_change-profile',
         apiCall.changeInfoProfile(objectInputsWithValues)
         .then((response) => {
             userInfo.setUserInfo({nameAuthor: response.name, infoAuthor: response.about});
+            changeProfileInfoPopup.close();
         })
         .catch((reject) => {console.log(`Ошибка при изменении данных профиля: ${reject}`)})
         .finally(() => {
             setTimeout(() => {
                 changeProfileInfoPopup.loadingData('Создать');
-                changeProfileInfoPopup.close();
             }, 0);
         })
     });
     changeProfileInfoPopup.setEventListeners();
-
-//Класс для работы попапа с изменением профиля пользователя
-const userInfo = new UserInfo({htmlElementWithName: profileName, htmlElementWithInfo: profileStatus, htmlElementWithAvatar: profileAvatar});
-
-//Установка имени, статуса и аватарки профиля изначально при загрузке страницы
-apiCall.getInfoProfile()
-    .then (res => {
-        userInfo.setUserInfo({nameAuthor: res.name, infoAuthor: res.about});
-        userInfo.setUserAvatar(res.avatar);
-        currentUserId = res._id;
-    })
-    .catch((err) => {
-        console.log(`Ошибка получения данных о пользователе - getInfoProfile завершен неудачно: ${err}`);
-});
 
 //3.3 Попап для добавления новой карточки place
 const addPublicationWithPopup = new PopupWithForm('.popup_type_add-publication', 
@@ -151,14 +167,14 @@ const addPublicationWithPopup = new PopupWithForm('.popup_type_add-publication',
         addPublicationWithPopup.loadingData('Загрузка...');
         apiCall.addNewCard(objectInputsWithValues)
         .then((response) => {
-            let cardElement = createCard(response);
+            const cardElement = createCard(response);
             section.addItemToTop(cardElement);
+            addPublicationWithPopup.close();
         })
         .catch((reject) => {console.log(`Ошибка при загрузке данных новой карточки на сервер: ${reject}`)})
         .finally(() => {
             setTimeout(() => {
                 addPublicationWithPopup.loadingData('Создать');
-                addPublicationWithPopup.close();
             }, 0);
         })
     });
@@ -171,21 +187,24 @@ const changeAvatarWithPopup = new PopupWithForm('.popup_type_change-avatar',
         apiCall.changeAvatarProfile(objectInputsWithValues)
             .then((response) => {
                 userInfo.setUserAvatar(response.avatar);
+                changeProfileInfoPopup.close();
             })
             .catch((reject) => {console.log(`Ошибка при изменении аватарки в профиле: ${reject}`)})
             .finally(() => {
                 setTimeout(() => {
                     changeProfileInfoPopup.loadingData('Сохранить');
-                    changeProfileInfoPopup.close();
                 }, 0);
         })
 });
     changeAvatarWithPopup.setEventListeners();
 
+
 //Функция для слушателя события клика на изменение профиля
 profileOpen.addEventListener('click', () => {
-    inputName.value = userInfo.getUserInfo().nameAuthor;
-    inputInfo.value = userInfo.getUserInfo().infoAuthor;
+    const userInfoObject = userInfo.getUserInfo();
+
+    inputName.value = userInfoObject.nameAuthor;
+    inputInfo.value = userInfoObject.infoAuthor;
     deleteInputErrors(profileFormValidator);
     changeProfileInfoPopup.open();
 });
