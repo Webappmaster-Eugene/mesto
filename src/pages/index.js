@@ -4,10 +4,13 @@ import './index.css';
 
 import settings from '../utils/settings.js'; //Объект с настройками для валидации
 
-import { profileOpen, avatarChanger, postAdd, profileForm, cardForm, avatarForm, inputName, inputInfo, profileName, profileStatus, profileAvatar} 
-from '../utils/consts.js'; //Переменные для работы в index.js 
+import { profileOpen, avatarChanger, postAdd, profileForm, cardForm, avatarForm, inputName, inputInfo, profileName, profileStatus, profileAvatar} from '../utils/consts.js'; //Переменные для работы в index.js 
+profileOpen //?
 
-import { apiUrlOptions } from '../utils/apiData.js'; //Настройки для работы с API
+let avatarChangerr = document.querySelector('.profile__avatar-changer');
+avatarChangerr
+
+import { apiUrlOptions } from '../utils/apiData.js'; //Настройки для работы с API 
 
 import Card from '../components/Card.js'; //Класс карточки place с фотографиями
 import FormValidator from '../components/FormValidator.js'; //Класс для валидации попапов (по инпутам и вводу) - карточки и профиля
@@ -46,7 +49,6 @@ Promise.all([apiCall.getInfoProfile(), apiCall.getInitialCards()])
     });
 
 //1. Валидация инпутов в попапах с изменением содержимого
-
 //1.1 Валидация формы с добавлением карточки place
 const addCardFormValidator = new FormValidator(settings, cardForm);
 addCardFormValidator.enableValidation();
@@ -146,6 +148,9 @@ const changeProfileInfoPopup = new PopupWithForm('.popup_type_change-profile',
         })
     });
     changeProfileInfoPopup.setEventListeners();
+
+    let xxx = 35;
+    xxx 
 
 //3.3 Попап для добавления новой карточки place
 const addPublicationWithPopup = new PopupWithForm('.popup_type_add-publication', 

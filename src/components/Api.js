@@ -108,6 +108,7 @@ class Api {
     //Поменять аватарку для пользователя
     async changeAvatarProfile(newAvatarObject) {
         return fetch(`${this._options.baseUrl}/users/me/avatar`, {
+
             method: 'PATCH',
             headers: {
                 authorization: this._options.authorizationToken,

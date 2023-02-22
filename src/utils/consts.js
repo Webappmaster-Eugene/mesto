@@ -1,10 +1,8 @@
 //Файл со всеми константами в проекте
-
 export const profileOpen = document.querySelector('.profile__changer'); //Иконка для изменения профиля
+
 export const avatarChanger = document.querySelector('.profile__avatar-changer'); //Иконка ручки при наведении на аватар для изменения картинки профиля
-
 export const postAdd = document.querySelector('.profile__new-post-add'); //Иконка плюса для добавления новой карточки публикации
-
 export const profileForm = document.forms["profile-form"]; //Форма изменения текстовой инофрмации профиля
 export const cardForm = document.forms["card-form"]; //Форма добавления карточки
 export const avatarForm = document.forms["avatar-form"]; //Форма изменения аватара профиля
